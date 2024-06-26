@@ -18,4 +18,13 @@ export const environment = {
     LOGOUT: `${API_BASE_URL_USER}/logout`,
   },
 
+  MAIN_URL: {
+    COUNTRY: {
+      GET_ALL: `${API_BASE_URL_MAIN}/getCountryList`,
+      SAVE: `${API_BASE_URL_MAIN}/saveCountry`,
+      UPDATE: `${API_BASE_URL_MAIN}/country/update`,
+      DELETE: `${API_BASE_URL_MAIN}/country/delete`,
+    },
+  }
+
 };

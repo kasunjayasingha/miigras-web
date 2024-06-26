@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {environment} from "../environments/environment.development";
 
 @Component({
@@ -11,3 +11,4 @@ export class AppComponent {
 }
 
 export const AUTENTICATION_URL_API = environment.AUTENTICATION_URL;
+export const MAIN_URL = environment.MAIN_URL;

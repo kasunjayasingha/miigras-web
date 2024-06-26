@@ -88,4 +88,8 @@ export class ValidationHandlerService {
   passwordValidation() {
     return '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])';
   }
+
+  countryCodeValidation() {
+    return '^\\+?[0-9]{1,3}$';
+  }
 }

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {Router} from "@angular/router";
 import {ValidationHandlerService} from "../../service/validation-handler.service";
 import {FormBuilder, Validators} from "@angular/forms";
@@ -15,7 +15,7 @@ interface ngOnInit {
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements ngOnInit {
+export class LoginComponent implements ngOnInit, OnDestroy {
 
   loginSubmitForm = false;
   username: any;
@@ -72,6 +72,10 @@ export class LoginComponent implements ngOnInit {
       this.messageService.add({severity: 'error', summary: 'Error', detail: error.error.error});
       console.log(error.error)
     });
+  }
+
+  ngOnDestroy() {
+
   }
 
 }

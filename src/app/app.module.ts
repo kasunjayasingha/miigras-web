@@ -22,6 +22,10 @@ import {AccessDeniedComponent} from './pages/access-denied/access-denied.compone
 import {NotFoundComponent} from './pages/not-found/not-found.component';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AccessTokenInterceptorService} from "./service/access-token-interceptor.service";
+import {CountryComponent} from './pages/country/country.component';
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {DialogModule} from "primeng/dialog";
+import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 
 @NgModule({
   declarations: [
@@ -29,7 +33,8 @@ import {AccessTokenInterceptorService} from "./service/access-token-interceptor.
     LoginComponent,
     DashboardComponent,
     AccessDeniedComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    CountryComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +50,10 @@ import {AccessTokenInterceptorService} from "./service/access-token-interceptor.
     ChartModule,
     MenuModule,
     TableModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule,
+    DialogModule,
+    SweetAlert2Module.forRoot(),
   ],
   providers: [MessageService, ConfirmationService,
     {
