@@ -1,0 +1,214 @@
+<div class="card py-10 ">
+  <ul class="list-none p-0 m-0 flex align-items-center font-medium mb-3">
+    <li>
+      <a class="text-500 no-underline line-height-3 cursor-pointer">Main</a>
+    </li>
+    <li class="px-2">
+      <i class="pi pi-angle-right text-500 line-height-3"></i>
+    </li>
+    <li>
+      <span class="text-900 line-height-3">Country</span>
+    </li>
+  </ul>
+  <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
+    <div>
+      <div class="font-medium text-3xl text-900">Countries</div>
+      <div class="flex align-items-center text-700 flex-wrap">
+        <div class="mr-5 flex align-items-center mt-3">
+          <i class="pi pi-fw pi-globe mr-2"></i>
+          <span>{{ countryCount }} Country</span>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3 lg:mt-0">
+      <button (click)="onClickCountryCreate()" class="p-button-outlined mr-2" icon="pi pi-plus"
+              label="New Country"
+              pButton
+              pRipple></button>
+    </div>
+  </div>
+</div>
+
+<p-table [paginator]="true" [rowsPerPageOptions]="[5, 10, 30]"
+         [rows]="5"
+         [showCurrentPageReport]="true"
+         [tableStyle]="{'min-width': '50rem'}"
+         [value]="countries"
+         class="card py-10 "
+         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+         styleClass="p-datatable-striped">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>No.</th>
+      <th>Name</th>
+      <th>code</th>
+      <th>NTP Time</th>
+      <th>Action</th>
+    </tr>
+  </ng-template>
+  <ng-template let-index="rowIndex" let-country pTemplate="body">
+    <tr>
+      <td>{{ index + 1 }}</td>
+      <td>{{ country.name }}</td>
+      <td>{{ country.code }}</td>
+      <td>{{ country.ntpTime }}</td>
+
+      <td>
+        <!--        <button (click)="editCountry(country)">-->
+        <!--          <i class="pi pi-pencil"></i>-->
+        <!--        </button>-->
+        <!--        &nbsp;-->
+        <button (click)="deleteCountry(country, 'right')" class="no-border-btn">
+          <i class="pi pi-trash text-red-500"></i>
+        </button>
+
+      </td>
+
+    </tr>
+  </ng-template>
+</p-table>
+<p-toast></p-toast>
+<p-confirmDialog [position]="position" [style]="{ width: '50vw' }" acceptButtonStyleClass="p-button-text"
+                 header="Confirmation"
+                 key="positionDialog" rejectButtonStyleClass="p-button-text"
+                 rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+
+<p-dialog [(visible)]="isAddEnabled" [breakpoints]="{'960px': '100vw'}"
+          [contentStyle]="{'max-height': '500px', 'overflow': 'auto'}" [modal]="true"
+          [resizable]="true" [style]="{width: '60vw'}" header="New Country"
+          showEffect="fade">
+
+  <form [formGroup]="countryForm">
+    <div class="p-fluid p-formgrid col">
+      <div class="row">
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label htmlFor="lastname2">Name</label>
+            <input [(ngModel)]="countryDTO.name"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isCountryformSubmitted && f1.name.errors }"
+                   formControlName='name'
+                   id="material" pInputText type="text"/>
+          </div>
+          <div *ngIf="isCountryformSubmitted && f1.name.errors" class="mt-1">
+            <small *ngIf="f1.name.errors['required']" class="p-error">Name is required.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label htmlFor="lastname2">Code</label>
+            <input [(ngModel)]="countryDTO.code"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isCountryformSubmitted && f1.code.errors }"
+                   formControlName='code'
+                   id="code" pInputText type="text"/>
+          </div>
+          <div *ngIf="isCountryformSubmitted && f1.code.errors" class="mt-1">
+            <small *ngIf="f1.code.errors['required']" class="p-error">Code is required.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label htmlFor="lastname2">NTP Time</label>
+            <input [(ngModel)]="countryDTO.ntpTime"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isCountryformSubmitted && f1.ntp.errors }"
+                   formControlName='ntp'
+                   id="ntp" pInputText type="text"/>
+          </div>
+          <div *ngIf="isCountryformSubmitted && f1.ntp.errors" class="mt-1">
+            <small *ngIf="f1.ntp.errors['required']" class="p-error">NTP Time is required.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+  <ng-template pTemplate="footer">
+    <button (click)="onAddCountrySubmit()" class="p-button-outlined" icon="pi pi-check" label="Add" pButton></button>
+  </ng-template>
+
+</p-dialog>
+
+<!--<p-dialog [(visible)]="resetPassword" [breakpoints]="{'960px': '100vw'}"-->
+<!--          [contentStyle]="{'max-height': '500px', 'overflow': 'auto'}" [modal]="true"-->
+<!--          [resizable]="true" [style]="{width: '60vw'}" header="Reset Password"-->
+<!--          showEffect="fade">-->
+
+<!--  <form [formGroup]="passwordRestForm">-->
+<!--    <div class="p-fluid p-formgrid col">-->
+
+<!--      <div class="row">-->
+<!--        <div class="field col-12 md:col-6">-->
+<!--          <div class="field p-fluid">-->
+<!--            <label htmlFor="lastname2">Email</label>-->
+<!--            <input [(ngModel)]="userDto.email"-->
+<!--                   formControlName='email'-->
+<!--                   id="materiaal" pInputText type="text"/>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="field col-12 md:col-6">-->
+<!--          <div class="field p-fluid">-->
+<!--            <label htmlFor="lastname2">Username</label>-->
+<!--            <input [(ngModel)]="userDto.userName"-->
+<!--                   formControlName='userName'-->
+<!--                   id="materiaall" pInputText type="text"/>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="row">-->
+
+<!--        <div class="field col-6">-->
+<!--          <div class="field p-fluid">-->
+<!--            <label htmlFor="lastname2">Password</label>-->
+<!--            <div class="p-inputgroup">-->
+<!--              <input [(ngModel)]="editpassword"-->
+<!--                     [ngClass]="{ 'ng-invalid ng-dirty': passwordRestFormSubmitted && f2.password.errors }"-->
+<!--                     formControlName='password'-->
+<!--                     id="passwords" pInputText type="password"/>-->
+<!--            </div>-->
+
+<!--          </div>-->
+<!--          <div *ngIf="isInvalidpassword" class="mt-1">-->
+<!--            <small class="p-error">Password is invalid.</small>-->
+<!--          </div>-->
+<!--          <div *ngIf="userformSubmitted && f1.password.errors" class="mt-1">-->
+<!--            <small *ngIf="f1.password.errors['required']" class="p-error">Password is required.</small>-->
+<!--            <small *ngIf="f1.password.errors['pattern']" class="p-error">Password is invalid.</small>-->
+<!--            <small *ngIf="f1.password.errors['minlength']" class="p-error">Password must be at least 4-->
+<!--              characters.</small>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="field col-6">-->
+<!--          <div class="field p-fluid">-->
+<!--            <label htmlFor="lastname2">New Password</label>-->
+<!--            <div class="p-inputgroup">-->
+<!--              <input [(ngModel)]="newpassword"-->
+<!--                     [ngClass]="{ 'ng-invalid ng-dirty': passwordRestFormSubmitted && f2.newPassword.errors }"-->
+<!--                     formControlName='newPassword'-->
+<!--                     id="passwordss" pInputText type="password"/>-->
+<!--            </div>-->
+
+<!--          </div>-->
+<!--          <div *ngIf="userformSubmitted && f1.password.errors" class="mt-1">-->
+<!--            <small *ngIf="f1.password.errors['required']" class="p-error">New Password is required.</small>-->
+<!--            <small *ngIf="f1.password.errors['pattern']" class="p-error">Password is invalid.</small>-->
+<!--            <small *ngIf="f1.password.errors['minlength']" class="p-error">Password must be at least 4-->
+<!--              characters.</small>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+
+<!--    </div>-->
+
+<!--  </form>-->
+<!--  <ng-template pTemplate="footer">-->
+<!--    <button (click)="onchangeUSerPasswirdSubmit()" class="p-button-outlined" icon="pi pi-check" label="Change"-->
+<!--            pButton></button>-->
+<!--  </ng-template>-->
+
+<!--</p-dialog>-->
+
+

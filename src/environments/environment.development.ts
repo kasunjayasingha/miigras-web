@@ -22,8 +22,8 @@ export const environment = {
     COUNTRY: {
       GET_ALL: `${API_BASE_URL_MAIN}/getCountryList`,
       SAVE: `${API_BASE_URL_MAIN}/saveCountry`,
-      UPDATE: `${API_BASE_URL_MAIN}/country/update`,
-      DELETE: `${API_BASE_URL_MAIN}/country/delete`,
+      CHEACK_COUNTRY_EXIST: `${API_BASE_URL_MAIN}/checkCountryIsPresent`,
+      DELETE: `${API_BASE_URL_MAIN}/deleteCountry`,
     },
   }
 
