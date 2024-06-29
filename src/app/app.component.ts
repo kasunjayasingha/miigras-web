@@ -12,3 +12,4 @@ export class AppComponent {
 
 export const AUTENTICATION_URL_API = environment.AUTENTICATION_URL;
 export const MAIN_URL = environment.MAIN_URL;
+export const REGISTRATION_URL = environment.REGISTRATION_URL;

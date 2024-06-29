@@ -26,6 +26,9 @@ import {CountryComponent} from './pages/country/country.component';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {DialogModule} from "primeng/dialog";
 import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
+import {AgencyComponent} from './pages/agency/agency.component';
+import {AgencyViewComponent} from './pages/agency/agency-view/agency-view.component';
+import {DropdownModule} from "primeng/dropdown";
 
 @NgModule({
   declarations: [
@@ -34,7 +37,8 @@ import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
     DashboardComponent,
     AccessDeniedComponent,
     NotFoundComponent,
-    CountryComponent
+    CountryComponent,
+    AgencyComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +58,7 @@ import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
     ConfirmDialogModule,
     DialogModule,
     SweetAlert2Module.forRoot(),
+    DropdownModule,
   ],
   providers: [MessageService, ConfirmationService,
     {

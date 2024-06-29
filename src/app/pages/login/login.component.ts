@@ -6,6 +6,7 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {AuthRequestDTO} from "../../model/AuthRequestDTO";
 import {UserService} from "../../service/user.service";
 import {AuthResponseDTO} from "../../model/AuthResponseDTO";
+import Swal from "sweetalert2";
 
 interface ngOnInit {
 }
@@ -68,6 +69,14 @@ export class LoginComponent implements ngOnInit, OnDestroy {
     }, error => {
       if (error.error.error == 'Bad credentials') {
         this.passwordIncorrect = true;
+      } else if (error.error.error == 'User not verified') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Login Failed',
+          text: 'You account is not activated!',
+          confirmButtonText: 'Ok',
+          allowOutsideClick: false,
+        });
       }
       this.messageService.add({severity: 'error', summary: 'Error', detail: error.error.error});
       console.log(error.error)

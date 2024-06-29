@@ -6,6 +6,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import Swal from "sweetalert2";
 import {MainService} from "../../service/main.service";
+import {ConfigService} from "../../service/config.service";
 
 @Component({
   selector: 'app-country',
@@ -32,6 +33,7 @@ export class CountryComponent implements OnInit, OnDestroy {
     private _validationService: ValidationHandlerService,
     private formBuilder: FormBuilder,
     private _mainService: MainService,
+    private _configService: ConfigService,
     private route: Router,) {
   }
 
@@ -95,6 +97,7 @@ export class CountryComponent implements OnInit, OnDestroy {
         return;
       }
       this.messageService.add({severity: 'error', summary: 'Error', detail: error.error.error});
+      this._configService.handleError(error);
     });
   }
 
@@ -136,6 +139,18 @@ export class CountryComponent implements OnInit, OnDestroy {
           }
         }, error => {
           this.messageService.add({severity: 'error', summary: 'Error', detail: error.error.error});
+          if (error.status === 403) {
+            Swal.fire({
+              title: 'Your session has expired. Please login again.',
+              icon: 'error',
+              confirmButtonText: 'Ok',
+              allowOutsideClick: false,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this._configService.logOut();
+              }
+            });
+          }
         });
       }
     });
@@ -152,6 +167,21 @@ export class CountryComponent implements OnInit, OnDestroy {
         Swal.close();
       } else {
         Swal.close();
+      }
+    }, error => {
+      Swal.close();
+      console.log(error)
+      if (error.status === 403) {
+        Swal.fire({
+          title: 'Your session has expired. Please login again.',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+          allowOutsideClick: false,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this._configService.logOut();
+          }
+        });
       }
     });
   }

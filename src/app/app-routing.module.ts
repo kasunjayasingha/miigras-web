@@ -20,7 +20,7 @@ const routes: Routes = [
     path: 'miigras-web',
     component: AppLayoutComponent,
     canActivate: [authGuard],
-    data: {expectedRole: ['ADMIN', 'USER']},
+    data: {expectedRole: ['ADMIN', 'SUPER_ADMIN']},
     children: [
       {
         path: '',
@@ -28,7 +28,27 @@ const routes: Routes = [
       },
       {
         path: 'country',
-        component: CountryComponent
+        component: CountryComponent,
+        canActivate: [authGuard],
+        data: {expectedRole: ['ADMIN', 'SUPER_ADMIN']}
+      },
+      {
+        path: 'ministry',
+        loadChildren: () => import('./pages/ministry/ministry.module').then(m => m.MinistryModule),
+        canActivate: [authGuard],
+        data: {expectedRole: ['ADMIN', 'SUPER_ADMIN']}
+      },
+      {
+        path: 'agency',
+        loadChildren: () => import('./pages/agency/agency.module').then(m => m.AgencyModule),
+        canActivate: [authGuard],
+        data: {expectedRole: ['ADMIN', 'SUPER_ADMIN']}
+      },
+      {
+        path: 'users',
+        loadChildren: () => import('./pages/users/users.module').then(m => m.UsersModule),
+        canActivate: [authGuard],
+        data: {expectedRole: ['ADMIN', 'SUPER_ADMIN']}
       }
     ]
   },

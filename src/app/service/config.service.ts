@@ -40,8 +40,17 @@ export class ConfigService {
       } else if (err.status === 401) {
         console.log('You will be logged out.');
         this.logOut();
+
       } else if (err.status === 403) {
-        console.log('An error occurred: ' + err.error.message);
+        console.log('An error occurred: ' + err.message);
+        console.log('You will be logged out.');
+        this.logOut();
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Info',
+          detail: 'Your session has expired. Please login again.'
+
+        });
       } else if (err.status === 404) {
         console.log('An error occurred: ' + err.error.message);
       } else if (err.status === 500) {
@@ -62,16 +71,6 @@ export class ConfigService {
     return throwError(err);
   }
 
-  getHeaders(): HttpHeaders {
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Allow-Origin': '*',
-      'Set-Cookie': 'HttpOnly;Secure;SameSite=Strict'
-    });
-
-  }
 
   logOut() {
     sessionStorage.clear();

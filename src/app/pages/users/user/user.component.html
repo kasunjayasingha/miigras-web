@@ -1,0 +1,180 @@
+<div class="card py-10 ">
+  <ul class="list-none p-0 m-0 flex align-items-center font-medium mb-3">
+    <li>
+      <a class="text-500 no-underline line-height-3 cursor-pointer">Main</a>
+    </li>
+    <li class="px-2">
+      <i class="pi pi-angle-right text-500 line-height-3"></i>
+    </li>
+    <li>
+      <span class="text-900 line-height-3">Users</span>
+    </li>
+    <li class="px-2">
+      <i class="pi pi-angle-right text-500 line-height-3"></i>
+    </li>
+    <li>
+      <span class="text-900 line-height-3">User</span>
+    </li>
+  </ul>
+  <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
+    <div>
+      <div class="font-medium text-3xl text-900">Users</div>
+      <div class="flex align-items-center text-700 flex-wrap">
+        <div class="mr-5 flex align-items-center mt-3">
+          <i class="pi pi-users mr-2"></i>
+          <span>Active Users</span>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3 lg:mt-0">
+      <button (click)="onClickUserCreate()" class="p-button-outlined mr-2" icon="pi pi-user-plus" label="New user"
+              pButton
+              pRipple></button>
+      <!--      <button (click)="onClickresetPassword()" class="p-button-outlined mr-2" icon="pi pi-key" label="Reset Password"-->
+      <!--              pButton-->
+      <!--              pRipple></button>-->
+    </div>
+  </div>
+</div>
+
+<p-table [paginator]="true" [rowsPerPageOptions]="[5, 10, 30]"
+         [rows]="5"
+         [showCurrentPageReport]="true"
+         [tableStyle]="{'min-width': '50rem'}"
+         [value]="users"
+         class="card py-10 "
+         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+         styleClass="p-datatable-striped">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>No.</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>status</th>
+      <th>Action</th>
+    </tr>
+  </ng-template>
+  <ng-template let-index="rowIndex" let-user pTemplate="body">
+    <tr>
+      <td>{{ index + 1 }}</td>
+      <td>{{ user.firstName }} {{ user.lastName }}</td>
+      <td>{{ user.email }}</td>
+      <td>
+        <div *ngIf="user.role == 'WORKER'">
+          <span class="appoinment-badge status-physical">{{ user.role }}</span>
+        </div>
+
+        <div *ngIf="user.role == 'ADMIN'">
+          <span class="appoinment-badge status-online">{{ user.role }}</span>
+        </div>
+      </td>
+      <td>
+        <p-inputSwitch (ngModelChange)="onChangeStatus(user)"
+                       [(ngModel)]="user.enabled == true? checked :unchecked"></p-inputSwitch>
+      <td>
+        <button class="no-border-btn" (click)="editUser(user)">
+          <i class="pi pi-pencil text-blue-500"></i>
+        </button>
+        &nbsp;
+        <button class="no-border-btn" (click)="deleteUser(user, 'top')" type="button">
+          <i class="pi pi-trash text-red-500"></i>
+        </button>
+
+      </td>
+
+    </tr>
+  </ng-template>
+</p-table>
+<p-toast></p-toast>
+<p-confirmDialog [position]="position" [style]="{ width: '25vw' }" acceptButtonStyleClass="p-button-text"
+                 header="Confirmation"
+                 key="positionDialog" rejectButtonStyleClass="p-button-text"
+                 rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+
+<p-dialog [(visible)]="addUser" [breakpoints]="{'960px': '100vw'}"
+          [contentStyle]="{'max-height': '500px', 'overflow': 'auto'}" [modal]="true"
+          [resizable]="true" [style]="{width: '60vw'}" header="New User"
+          showEffect="fade">
+
+  <form [formGroup]="userform">
+    <div class="p-fluid p-formgrid col">
+
+      <div class="row">
+        <div class="field col-6">
+          <div class="field p-fluid">
+            <label htmlFor="firstname2">Role</label>
+            <p-dropdown
+              (onChange)="setRole($event)"
+              [ngClass]="{ 'ng-invalid ng-dirty': userformSubmitted && f1.role.errors }"
+              [options]="roleType"
+              [showClear]="true"
+              formControlName="role"
+              optionLabel="name" placeholder="Select role"></p-dropdown>
+          </div>
+          <div *ngIf="userformSubmitted && f1.role.errors" class="mt-1">
+            <small *ngIf="f1.role.errors['required']" class="p-error">Role is required.</small>
+          </div>
+        </div>
+
+        <div class="field col-6 ">
+          <div class="field p-fluid">
+            <label htmlFor="lastname2">Email</label>
+            <div class="p-inputgroup">
+              <input [(ngModel)]="userDTO.email"
+                     [ngClass]="{ 'ng-invalid ng-dirty': userformSubmitted && f1.email.errors }"
+                     formControlName='email'
+                     id="advance" pInputText type="email"/>
+            </div>
+
+          </div>
+          <div *ngIf="userformSubmitted && f1.email.errors" class="mt-1">
+            <small *ngIf="f1.email.errors['required']" class="p-error">Email is required.</small>
+            <small *ngIf="f1.email.errors['pattern']" class="p-error">Email is invalid.</small>
+          </div>
+          <div *ngIf="isUserExist" class="mt-1">
+            <small class="p-error">Email already exist.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label htmlFor="lastname2">First name</label>
+            <input [(ngModel)]="userDTO.firstName"
+                   [ngClass]="{ 'ng-invalid ng-dirty': userformSubmitted && f1.firstName.errors }"
+                   formControlName='firstName'
+                   id="material" pInputText type="text"/>
+          </div>
+          <div *ngIf="userformSubmitted && f1.firstName.errors" class="mt-1">
+            <small *ngIf="f1.firstName.errors['required']" class="p-error">First name is required.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label htmlFor="lastname2">Last name</label>
+            <input [(ngModel)]="userDTO.lastName"
+                   [ngClass]="{ 'ng-invalid ng-dirty': userformSubmitted && f1.lastName.errors }"
+                   formControlName='lastName'
+                   id="lastname" pInputText type="text"/>
+          </div>
+          <div *ngIf="userformSubmitted && f1.lastName.errors" class="mt-1">
+            <small *ngIf="f1.lastName.errors['required']" class="p-error">Last name is required.</small>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+  <ng-template pTemplate="footer">
+    <button (click)="onaddUSerSubmit()" class="p-button-outlined" icon="pi pi-check" label="Add" pButton></button>
+  </ng-template>
+
+</p-dialog>
+
+
+
+

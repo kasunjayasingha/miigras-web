@@ -8,22 +8,28 @@ export const environment = {
   production: false,
 
   AUTENTICATION_URL: {
-    CHEACK_EMAIL: {
-      EMAIL: `${API_BASE_URL_USER}/checkEmailIsPresent/`,
-    },
-    CHEACK_USERNAME: {
-      USERNAME: `${API_BASE_URL_USER}/checkUsernameIsPresent/`,
-    },
     LOGIN: `${API_BASE_URL_USER}/login`,
     LOGOUT: `${API_BASE_URL_USER}/logout`,
   },
-
+  REGISTRATION_URL: {
+    REGISTER: `${API_BASE_URL_USER}/register`,
+    GET_ALL: `${API_BASE_URL_USER}/getAllUser`,
+    USER_STATUS: `${API_BASE_URL_USER}/userStatusChange`,
+  },
   MAIN_URL: {
     COUNTRY: {
       GET_ALL: `${API_BASE_URL_MAIN}/getCountryList`,
       SAVE: `${API_BASE_URL_MAIN}/saveCountry`,
       CHEACK_COUNTRY_EXIST: `${API_BASE_URL_MAIN}/checkCountryIsPresent`,
       DELETE: `${API_BASE_URL_MAIN}/deleteCountry`,
+    },
+    MINISTRY: {
+      GET_ALL: `${API_BASE_URL_MAIN}/getDomainMinistryList`,
+      SAVE: `${API_BASE_URL_MAIN}/saveDomainMinistry`,
+    },
+    AGENCY: {
+      GET_ALL: `${API_BASE_URL_MAIN}/getAgencyList`,
+      SAVE: `${API_BASE_URL_MAIN}/saveAgency`,
     },
   }
 
