@@ -1,5 +1,6 @@
-<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
-  <div class="flex flex-column align-items-center justify-content-center">
+<div
+  class=" background surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+  <div class=" content flex flex-column align-items-center justify-content-center">
     <!--    <img alt="Sakai logo"-->
     <!--         class="mb-5 w-6rem flex-shrink-0"-->
     <!--         src="assets/layout/images/{{configService.config.colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.svg">-->
@@ -15,13 +16,13 @@
         <form [formGroup]="loginForm">
           <div>
             <div class="field p-fluid">
-              <label class="block text-900 text-xl font-medium mb-2" for="email1">Username</label>
+              <label class="block text-900 text-xl font-medium mb-2" for="email1">Email</label>
               <input [(ngModel)]="authRequestDTO.username"
                      [ngClass]="{ 'ng-invalid ng-dirty': loginSubmitForm && f1.username.errors }"
                      class="w-full md:w-30rem mb-5" formControlName="username"
                      id="email1"
                      pInputText
-                     placeholder="Username"
+                     placeholder="Email"
                      style="padding:1rem" type="text">
 
               <div *ngIf="loginSubmitForm && f1.username.errors" class="">

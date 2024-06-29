@@ -142,7 +142,7 @@ export class MinistryComponent implements OnInit {
     this.processing();
     this._mainService.getAllMinistry().subscribe((data: Array<DomainMinistryDTO>) => {
       if (data.length > 0) {
-        this.ministries = data;
+        this.ministries = data.reverse();
         Swal.close();
       } else {
         this.isAddEnabled = false;

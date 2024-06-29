@@ -41,7 +41,7 @@ export class AgencyViewComponent implements OnInit {
     this.processing();
     this._mainService.getAllAgency().subscribe((res: Array<AgencyDTO>) => {
       if (res != null) {
-        this.agencies = res;
+        this.agencies = res.reverse();
         Swal.close();
       } else {
         this._mainService.isAddEnabled = false;

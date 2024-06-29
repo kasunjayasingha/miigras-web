@@ -11,7 +11,7 @@ const routes: Routes = [
     path: 'user',
     component: UserComponent,
     canActivate: [authGuard],
-    data: {expectedRole: ['ADMIN', 'SUPER_ADMIN']}
+    data: {expectedRole: ['SUPER_ADMIN']}
   },
   {
     path: 'employee',

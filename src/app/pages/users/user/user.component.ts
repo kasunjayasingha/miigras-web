@@ -146,7 +146,7 @@ export class UserComponent implements OnInit {
     this.processing();
     this._userService.getAllUsers().subscribe((res: any) => {
       if (res != null) {
-        this.users = res;
+        this.users = res.reverse();
         Swal.close();
       } else {
         Swal.close();
