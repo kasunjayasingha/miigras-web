@@ -14,6 +14,7 @@ import {DialogModule} from "primeng/dialog";
 import {DropdownModule} from "primeng/dropdown";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ChipsModule} from "primeng/chips";
+import {RippleModule} from "primeng/ripple";
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import {ChipsModule} from "primeng/chips";
     DropdownModule,
     FormsModule,
     ReactiveFormsModule,
-    ChipsModule
+    ChipsModule,
+    RippleModule
   ]
 })
 export class UsersModule {
