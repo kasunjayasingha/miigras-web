@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {environment} from "../environments/environment.development";
 import {ConfigService} from "./service/config.service";
-import {TokenService} from "./service/token.service";
 
 @Component({
   selector: 'app-root',
@@ -11,7 +10,7 @@ import {TokenService} from "./service/token.service";
 export class AppComponent implements OnInit{
   title = 'miigras-web';
 
-  constructor(private configService: ConfigService, private tokenService: TokenService) { }
+  constructor(private configService: ConfigService) { }
 
   ngOnInit() {
 

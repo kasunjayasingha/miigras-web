@@ -4,7 +4,6 @@ import {MessageService} from "primeng/api";
 import {throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {AppConfig} from "../layout/service/app.layout.service";
-import {TokenService} from "./token.service";
 import {AUTENTICATION_URL_API} from "../app.component";
 
 @Injectable({
