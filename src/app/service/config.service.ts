@@ -2,8 +2,10 @@ import {Injectable} from '@angular/core';
 import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {throwError} from "rxjs";
-import {HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {AppConfig} from "../layout/service/app.layout.service";
+import {TokenService} from "./token.service";
+import {AUTENTICATION_URL_API} from "../app.component";
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +23,10 @@ export class ConfigService {
 
   constructor(
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private http: HttpClient,
   ) {
   }
-
   handleError(err: HttpErrorResponse) {
     // console.log("Begin", err);
     if (err.error instanceof ProgressEvent) {
@@ -69,6 +71,12 @@ export class ConfigService {
       }
     }
     return throwError(err);
+  }
+
+  isTokenValid() {
+    return this.http.post(AUTENTICATION_URL_API.IS_TOKEN_VALID, "").subscribe((res:any) => {
+      return res['success'] == 'FAILURE';
+    });
   }
 
 

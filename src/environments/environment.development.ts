@@ -10,6 +10,7 @@ export const environment = {
   AUTENTICATION_URL: {
     LOGIN: `${API_BASE_URL_USER}/login`,
     LOGOUT: `${API_BASE_URL_USER}/logout`,
+    IS_TOKEN_VALID: `${API_BASE_URL_USER}/isValidToken`,
   },
   REGISTRATION_URL: {
     REGISTER: `${API_BASE_URL_USER}/register`,

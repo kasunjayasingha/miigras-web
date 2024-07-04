@@ -200,16 +200,138 @@ export class EmployeeComponent implements OnInit {
       this.employeeDTO.gradient.person.address.postalCode = this.employeeDTO.person.address.postalCode;
 
 
-      this.employeeForm.controls['houseNumberG'].disabled;
-      this.employeeForm.controls['streetOneG'].disabled;
-      this.employeeForm.controls['streetTwoG'].disabled;
-      this.employeeForm.controls['cityG'].disabled;
-      this.employeeForm.controls['districtG'].disabled;
-      this.employeeForm.controls['postalCodeG'].disabled;
+      this.employeeForm.controls['houseNumberG'].disable();
+      this.employeeForm.controls['streetOneG'].disable();
+      this.employeeForm.controls['streetTwoG'].disable();
+      this.employeeForm.controls['cityG'].disable();
+      this.employeeForm.controls['districtG'].disable();
+      this.employeeForm.controls['postalCodeG'].disable();
+    }
+    if(!event.value){
+      this.employeeForm.controls['houseNumberG'].enable();
+      this.employeeForm.controls['streetOneG'].enable();
+      this.employeeForm.controls['streetTwoG'].enable();
+      this.employeeForm.controls['cityG'].enable();
+      this.employeeForm.controls['districtG'].enable();
+      this.employeeForm.controls['postalCodeG'].enable();
+
+      this.employeeDTO.gradient.person.address.houseNumber = '';
+      this.employeeDTO.gradient.person.address.streetOne = '';
+      this.employeeDTO.gradient.person.address.streetTwo = '';
+      this.employeeDTO.gradient.person.address.city = '';
+      this.employeeDTO.gradient.person.address.district = '';
+      this.employeeDTO.gradient.person.address.postalCode = '';
     }
   }
 
   onAddEmployeeSubmit() {
+    this.isEmployeeFormSubmitted = true;
+    if (this.employeeForm.invalid) {
+      this.messageService.add({severity: 'error', summary: 'Error', detail: 'Please fill the required fields'});
+      return;
+    }
+    this._mainService.saveEmployee(this.employeeDTO).subscribe((data: any) => {
+      if (data['success'] === 'SUCCESS') {
+        this.isAddEnabled = false;
+        this.isEmployeeFormSubmitted = false;
+        this.employeeForm.reset();
+        this.employeeDTO = {
+          id: 0,
+          empId: '',
+          person: {
+            id: 0,
+            firstName: '',
+            lastName: '',
+            nic: '',
+            email: '',
+            mobile1: '',
+            mobile2: '',
+            passport: '',
+            dob: '',
+            address: {
+              id: 0,
+              houseNumber: '',
+              streetOne: '',
+              streetTwo: '',
+              village: '',
+              city: '',
+              district: '',
+              postalCode: '',
+            }
+          },
+          user: {
+            id: 0,
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            role: Role.WORKER,
+            enabled: true
+          },
+          agency: {
+            id: 0,
+            name: '',
+            email: '',
+            phone: '',
+            phone2: '',
+            regNum: '',
+            fax: '',
+            addressAgency: {
+              id: 0,
+              houseNumber: '',
+              streetOne: '',
+              streetTwo: '',
+              village: '',
+              city: '',
+              district: '',
+              postalCode: '',
+            },
+            domainMinistry: {
+              id: 0,
+              name: '',
+              email: '',
+              phone: '',
+              fax: '',
+              country: {
+                id: 0,
+                name: '',
+                code: '',
+                ntpTime: ''
+              }
+            }
+          },
+          gradient: {
+            id: 0,
+            gradientType: GradientType.OTHER,
+            person: {
+              id: 0,
+              firstName: '',
+              lastName: '',
+              nic: '',
+              email: '',
+              mobile1: '',
+              mobile2: '',
+              passport: '',
+              dob: '',
+              address: {
+                id: 0,
+                houseNumber: '',
+                streetOne: '',
+                streetTwo: '',
+                village: '',
+                city: '',
+                district: '',
+                postalCode: '',
+              }
+            },
+            sameAsEmployeeAddress: false,
+          }
+        };
+        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Employee created successfully'});
+      } else {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'Employee creation failed'});
+      }
+    });
   }
 
   generateEmpId() {

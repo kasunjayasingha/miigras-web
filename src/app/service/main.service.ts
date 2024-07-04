@@ -5,6 +5,9 @@ import {map} from "rxjs";
 import {CountryDTO} from "../model/CountryDTO";
 import {DomainMinistryDTO} from "../model/DomainMinistryDTO";
 import {AgencyDTO} from "../model/AgencyDTO";
+import {EmployeeDTO} from "../model/EmployeeDTO";
+import Swal from "sweetalert2";
+import {ConfigService} from "./config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +16,19 @@ export class MainService {
 
   constructor(
     private http: HttpClient,
+    private configService: ConfigService
   ) {
+    if(this.configService.isTokenValid()){
+      Swal.fire({
+        title: 'Session Expired',
+        text: 'Your session has expired. Please login again.',
+        icon: 'warning',
+        confirmButtonText: 'Ok',
+        allowOutsideClick: false,
+      }).then(() => {
+        this.configService.logOut();
+      });
+    }
   }
 
   isAddEnabled: boolean = false;
@@ -52,5 +67,9 @@ export class MainService {
 
   generateEmpId() {
     return this.http.get(MAIN_URL.EMPLOYEE.GENERATE_EMP_ID).pipe(map(result => (result as string)));
+  }
+
+  saveEmployee(employeeDTO: EmployeeDTO) {
+    return this.http.post(MAIN_URL.EMPLOYEE.SAVE, employeeDTO);
   }
 }

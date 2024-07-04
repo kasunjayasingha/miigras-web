@@ -1,13 +1,23 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {environment} from "../environments/environment.development";
+import {ConfigService} from "./service/config.service";
+import {TokenService} from "./service/token.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'miigras-web';
+
+  constructor(private configService: ConfigService, private tokenService: TokenService) { }
+
+  ngOnInit() {
+
+  }
+
+
 }
 
 export const AUTENTICATION_URL_API = environment.AUTENTICATION_URL;
