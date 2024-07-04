@@ -48,7 +48,7 @@
 
 <p-dialog [(visible)]="isAddEnabled" [breakpoints]="{'960px': '100vw'}"
           [contentStyle]="{'max-height': '500px', 'overflow': 'auto'}" [modal]="true"
-          [resizable]="true" [style]="{width: '60vw'}" header="New Agency"
+          [resizable]="true" [style]="{width: '60vw'}" header="New Employee"
           showEffect="fade">
 
   <form [formGroup]="employeeForm">
@@ -56,54 +56,108 @@
       <div class="row">
         <div class="field col-12 md:col-6">
           <div class="field p-fluid">
-            <label htmlFor="lastname2">Name</label>
-            <input [(ngModel)]="agencyDTO.name"
-                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.name.errors }"
-                   formControlName='name'
+            <label htmlFor="lastname2">Employee ID</label>
+            <input [(ngModel)]="employeeDTO.empId"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1['empId'].errors }"
+                   formControlName='empId'
                    id="material" pInputText type="text"/>
           </div>
-          <div *ngIf="isAgencyFormSubmitted && f1.name.errors" class="mt-1">
-            <small *ngIf="f1.name.errors['required']" class="p-error">Name is required.</small>
+          <div *ngIf="isEmployeeFormSubmitted && f1['empId'].errors" class="mt-1">
+            <small *ngIf="f1['empId'].errors?.['required']" class="p-error">Employee ID is required.</small>
           </div>
         </div>
 
         <div class="field col-12 md:col-6">
           <div class="field p-fluid">
-            <label htmlFor="lastname2">Email</label>
-            <input [(ngModel)]="agencyDTO.email"
-                   [ngClass]="{ 'ng-invalid ng-dirty': isAgencyFormSubmitted && f1.email.errors }"
+            <label class="required-label" htmlFor="lastname2">First name</label>
+            <input [(ngModel)]="employeeDTO.person.firstName"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.firstName.errors }"
+                   formControlName='firstName'
+                   id="firstN" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.firstName.errors" class="mt-1">
+            <small *ngIf="f1.firstName.errors['required']" class="p-error">First name is required.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label class="required-label" htmlFor="lastname2">Last name</label>
+            <input [(ngModel)]="employeeDTO.person.lastName"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.lastName.errors }"
+                   formControlName='lastName'
+                   id="lastN" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.lastName.errors" class="mt-1">
+            <small *ngIf="f1.lastName.errors['required']" class="p-error">Last name is required.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-3">
+          <div class="field p-fluid">
+            <label class="required-label" htmlFor="lastname2">NIC</label>
+            <input [(ngModel)]="employeeDTO.person.nic"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.nic.errors }"
+                   formControlName='nic'
+                   id="nic" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.nic.errors" class="mt-1">
+            <small *ngIf="f1.nic.errors['required']" class="p-error">NIC is required.</small>
+            <small *ngIf="f1.nic.errors['pattern']" class="p-error">NIC is invalid.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-3">
+          <div class="field p-fluid">
+            <label class="required-label" htmlFor="lastname2">Passport No.</label>
+            <input [(ngModel)]="employeeDTO.person.passport"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.passport.errors }"
+                   formControlName='passport'
+                   id="passport" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.passport.errors" class="mt-1">
+            <small *ngIf="f1.passport.errors['required']" class="p-error">Passport is required.</small>
+            <small *ngIf="f1.passport.errors['pattern']" class="p-error">Passport is invalid.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label class="required-label" htmlFor="lastname2">Email</label>
+            <input [(ngModel)]="employeeDTO.person.email"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.email.errors }"
                    formControlName='email'
                    id="email" pInputText type="text"/>
           </div>
-          <div *ngIf="isAgencyFormSubmitted && f1.email.errors" class="mt-1">
+          <div *ngIf="isEmployeeFormSubmitted && f1.email.errors" class="mt-1">
             <small *ngIf="f1.email.errors['required']" class="p-error">Email is required.</small>
             <small *ngIf="f1.email.errors['pattern']" class="p-error">Email is invalid.</small>
           </div>
         </div>
 
-        <div class="field col-12 md:col-6">
+        <div class="field col-12 md:col-3">
           <div class="field p-fluid">
-            <label htmlFor="lastname2">Phone No.</label>
-            <input [(ngModel)]="agencyDTO.phone"
-                   [ngClass]="{ 'ng-invalid ng-dirty': isAgencyFormSubmitted && f1.phone.errors }"
+            <label class="required-label" htmlFor="lastname2">Phone No.</label>
+            <input [(ngModel)]="employeeDTO.person.mobile1"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.phone.errors }"
                    formControlName='phone'
-                   id="ntp" pInputText type="text"/>
+                   id="phone" pInputText type="text"/>
           </div>
-          <div *ngIf="isAgencyFormSubmitted && f1.phone.errors" class="mt-1">
+          <div *ngIf="isEmployeeFormSubmitted && f1.phone.errors" class="mt-1">
             <small *ngIf="f1.phone.errors['required']" class="p-error">Phone is required.</small>
             <small *ngIf="f1.phone.errors['pattern']" class="p-error">Phone is invalid.</small>
           </div>
         </div>
 
-        <div class="field col-12 md:col-6">
+        <div class="field col-12 md:col-3">
           <div class="field p-fluid">
             <label htmlFor="lastname2">Phone 2 No.</label>
-            <input [(ngModel)]="agencyDTO.phone2"
-                   [ngClass]="{ 'ng-invalid ng-dirty': isAgencyFormSubmitted && f1.phone2.errors }"
+            <input [(ngModel)]="employeeDTO.person.mobile2"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.phone2.errors }"
                    formControlName='phone2'
-                   id="ntp1" pInputText type="text"/>
+                   id="phone2" pInputText type="text"/>
           </div>
-          <div *ngIf="isAgencyFormSubmitted && f1.phone2.errors" class="mt-1">
+          <div *ngIf="isEmployeeFormSubmitted && f1.phone2.errors" class="mt-1">
             <small *ngIf="f1.phone2.errors['required']" class="p-error">Phone 2 is required.</small>
             <small *ngIf="f1.phone2.errors['pattern']" class="p-error">Phone 2 is invalid.</small>
           </div>
@@ -111,30 +165,30 @@
 
         <div class="field col-12 md:col-6">
           <div class="field p-fluid">
-            <label htmlFor="lastname2">Register No.</label>
-            <input [(ngModel)]="agencyDTO.regNum"
-                   [ngClass]="{ 'ng-invalid ng-dirty': isAgencyFormSubmitted && f1.regNum.errors }"
-                   formControlName='regNum'
-                   id="reg" pInputText type="text"/>
+            <label class="required-label" htmlFor="lastname2">Date of Birth</label>
+            <input [(ngModel)]="employeeDTO.person.dob"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.dob.errors }"
+                   formControlName='dob'
+                   id="dob" pInputText type="text"/>
           </div>
-          <div *ngIf="isAgencyFormSubmitted && f1.regNum.errors" class="mt-1">
-            <small *ngIf="f1.regNum.errors['required']" class="p-error">Register No. is required.</small>
+          <div *ngIf="isEmployeeFormSubmitted && f1.dob.errors" class="mt-1">
+            <small *ngIf="f1.dob.errors['required']" class="p-error">Date of Birth is required.</small>
           </div>
         </div>
 
         <div class="field col-6">
           <div class="field p-fluid">
-            <label htmlFor="firstname2">Ministry</label>
+            <label class="required-label" htmlFor="firstname2">Agency</label>
             <p-dropdown
-              (onChange)="setMinistry($event)"
-              [ngClass]="{ 'ng-invalid ng-dirty': isAgencyFormSubmitted && f1.domainMinistry.errors }"
-              [options]="ministryList"
+              (onChange)="setAgency($event)"
+              [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.agency.errors }"
+              [options]="agencyList"
               [showClear]="true"
-              formControlName="domainMinistry"
-              optionLabel="name" placeholder="Select Ministry"></p-dropdown>
+              formControlName="agency"
+              optionLabel="name" placeholder="Select Agency"></p-dropdown>
           </div>
-          <div *ngIf="isAgencyFormSubmitted && f1.domainMinistry.errors" class="mt-1">
-            <small *ngIf="f1.domainMinistry.errors['required']" class="p-error">Ministry is required.</small>
+          <div *ngIf="isEmployeeFormSubmitted && f1.agency.errors" class="mt-1">
+            <small *ngIf="f1.agency.errors['required']" class="p-error">Agency is required.</small>
           </div>
         </div>
       </div>
@@ -142,65 +196,278 @@
       <div class="row">
         <div class="field col-12 md:col-6">
           <div class="field p-fluid">
-            <label htmlFor="lastname2">Street one</label>
-            <input [(ngModel)]="agencyDTO.addressAgency.streetOne"
-                   [ngClass]="{ 'ng-invalid ng-dirty': isAgencyFormSubmitted && f1.streetOne.errors }"
-                   formControlName='streetOne'
-                   id="material2" pInputText type="text"/>
+            <label htmlFor="lastname2">House No.</label>
+            <input [(ngModel)]="employeeDTO.person.address.houseNumber"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.houseNumberE.errors }"
+                   formControlName='houseNumberE'
+                   id="houseNumberE" pInputText type="text"/>
           </div>
-          <div *ngIf="isAgencyFormSubmitted && f1.streetOne.errors" class="mt-1">
-            <small *ngIf="f1.streetOne.errors['required']" class="p-error">Street one is required.</small>
-          </div>
-        </div>
-        <div class="field col-12 md:col-6">
-          <div class="field p-fluid">
-            <label htmlFor="lastname2">Street two</label>
-            <input [(ngModel)]="agencyDTO.addressAgency.streetTwo"
-                   [ngClass]="{ 'ng-invalid ng-dirty': isAgencyFormSubmitted && f1.streetTwo.errors }"
-                   formControlName='streetTwo'
-                   id="material3" pInputText type="text"/>
-          </div>
-          <div *ngIf="isAgencyFormSubmitted && f1.streetTwo.errors" class="mt-1">
-            <small *ngIf="f1.streetTwo.errors['required']" class="p-error">Street two is required.</small>
+          <div *ngIf="isEmployeeFormSubmitted && f1.houseNumberE.errors" class="mt-1">
+            <small *ngIf="f1.houseNumberE.errors['required']" class="p-error">House No. is required.</small>
           </div>
         </div>
 
         <div class="field col-12 md:col-6">
           <div class="field p-fluid">
-            <label htmlFor="lastname2">City</label>
-            <input [(ngModel)]="agencyDTO.addressAgency.city"
-                   [ngClass]="{ 'ng-invalid ng-dirty': isAgencyFormSubmitted && f1.city.errors }"
-                   formControlName='city'
-                   id="material4" pInputText type="text"/>
+            <label htmlFor="lastname2">Street one</label>
+            <input [(ngModel)]="employeeDTO.person.address.streetOne"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.streetOneE.errors }"
+                   formControlName='streetOneE'
+                   id="streetOneE" pInputText type="text"/>
           </div>
-          <div *ngIf="isAgencyFormSubmitted && f1.city.errors" class="mt-1">
+          <div *ngIf="isEmployeeFormSubmitted && f1.streetOneE.errors" class="mt-1">
+            <small *ngIf="f1.streetOneE.errors['required']" class="p-error">Street one is required.</small>
+          </div>
+        </div>
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label htmlFor="lastname2">Street two</label>
+            <input [(ngModel)]="employeeDTO.person.address.streetTwo"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.streetTwoE.errors }"
+                   formControlName='streetTwoE'
+                   id="streetTwoE" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.streetTwoE.errors" class="mt-1">
+            <small *ngIf="f1.streetTwoE.errors['required']" class="p-error">Street two is required.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label class="required-label" htmlFor="lastname2">City</label>
+            <input [(ngModel)]="employeeDTO.person.address.city"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.city.errors }"
+                   formControlName='city'
+                   id="city" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.city.errors" class="mt-1">
             <small *ngIf="f1.city.errors['required']" class="p-error">City is required.</small>
           </div>
         </div>
 
         <div class="field col-12 md:col-6">
           <div class="field p-fluid">
-            <label htmlFor="lastname2">District</label>
-            <input [(ngModel)]="agencyDTO.addressAgency.district"
-                   [ngClass]="{ 'ng-invalid ng-dirty': isAgencyFormSubmitted && f1.district.errors }"
+            <label class="required-label" htmlFor="lastname2">District</label>
+            <input [(ngModel)]="employeeDTO.person.address.district"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.district.errors }"
                    formControlName='district'
-                   id="material5" pInputText type="text"/>
+                   id="district" pInputText type="text"/>
           </div>
-          <div *ngIf="isAgencyFormSubmitted && f1.district.errors" class="mt-1">
+          <div *ngIf="isEmployeeFormSubmitted && f1.district.errors" class="mt-1">
             <small *ngIf="f1.district.errors['required']" class="p-error">District is required.</small>
           </div>
         </div>
 
         <div class="field col-12 md:col-6">
           <div class="field p-fluid">
-            <label htmlFor="lastname2">Postal Code</label>
-            <input [(ngModel)]="agencyDTO.addressAgency.postalCode"
-                   [ngClass]="{ 'ng-invalid ng-dirty': isAgencyFormSubmitted && f1.postalCode.errors }"
+            <label class="required-label" htmlFor="lastname2">Postal Code</label>
+            <input [(ngModel)]="employeeDTO.person.address.postalCode"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.postalCode.errors }"
                    formControlName='postalCode'
-                   id="material6" pInputText type="text"/>
+                   id="postalCode" pInputText type="text"/>
           </div>
-          <div *ngIf="isAgencyFormSubmitted && f1.postalCode.errors" class="mt-1">
+          <div *ngIf="isEmployeeFormSubmitted && f1.postalCode.errors" class="mt-1">
             <small *ngIf="f1.postalCode.errors['required']" class="p-error">Postal Code is required.</small>
+          </div>
+        </div>
+      </div>
+      <h2 class="text-900 text-lg mt-5">Guardian</h2>
+      <div class="row">
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label class="required-label" htmlFor="lastname2">First name</label>
+            <input [(ngModel)]="employeeDTO.gradient.person.firstName"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.firstNameG.errors }"
+                   formControlName='firstNameG'
+                   id="firstNameG" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.firstNameG.errors" class="mt-1">
+            <small *ngIf="f1.firstNameG.errors['required']" class="p-error">First name is required.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label class="required-label" htmlFor="lastname2">Last name</label>
+            <input [(ngModel)]="employeeDTO.gradient.person.lastName"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.lastNameG.errors }"
+                   formControlName='lastNameG'
+                   id="lastNameG" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.lastNameG.errors" class="mt-1">
+            <small *ngIf="f1.lastNameG.errors['required']" class="p-error">Last name is required.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-3">
+          <div class="field p-fluid">
+            <label class="required-label" htmlFor="lastname2">NIC</label>
+            <input [(ngModel)]="employeeDTO.gradient.person.nic"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.nicG.errors }"
+                   formControlName='nicG'
+                   id="nicG" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.nicG.errors" class="mt-1">
+            <small *ngIf="f1.nicG.errors['required']" class="p-error">NIC is required.</small>
+            <small *ngIf="f1.nicG.errors['pattern']" class="p-error">NIC is invalid.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-3">
+          <div class="field p-fluid">
+            <label htmlFor="lastname2">Passport No.</label>
+            <input [(ngModel)]="employeeDTO.gradient.person.passport"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.passportG.errors }"
+                   formControlName='passportG'
+                   id="passportG" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.passportG.errors" class="mt-1">
+            <small *ngIf="f1.passportG.errors['required']" class="p-error">Passport is required.</small>
+            <small *ngIf="f1.passportG.errors['pattern']" class="p-error">Passport is invalid.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label class="required-label" htmlFor="lastname2">Email</label>
+            <input [(ngModel)]="employeeDTO.gradient.person.email"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.emailG.errors }"
+                   formControlName='emailG'
+                   id="emailG" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.emailG.errors" class="mt-1">
+            <small *ngIf="f1.emailG.errors['required']" class="p-error">Email is required.</small>
+            <small *ngIf="f1.emailG.errors['pattern']" class="p-error">Email is invalid.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-3">
+          <div class="field p-fluid">
+            <label class="required-label" htmlFor="lastname2">Phone No.</label>
+            <input [(ngModel)]="employeeDTO.gradient.person.mobile1"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.phoneG.errors }"
+                   formControlName='phoneG'
+                   id="phoneG" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.phoneG.errors" class="mt-1">
+            <small *ngIf="f1.phoneG.errors['required']" class="p-error">Phone is required.</small>
+            <small *ngIf="f1.phoneG.errors['pattern']" class="p-error">Phone is invalid.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-3">
+          <div class="field p-fluid">
+            <label class="required-label" htmlFor="lastname2">Phone 2 No.</label>
+            <input [(ngModel)]="employeeDTO.gradient.person.mobile2"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.phone2G.errors }"
+                   formControlName='phone2G'
+                   id="phone2G" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.phone2G.errors" class="mt-1">
+            <small *ngIf="f1.phone2G.errors['required']" class="p-error">Phone 2 is required.</small>
+            <small *ngIf="f1.phone2G.errors['pattern']" class="p-error">Phone 2 is invalid.</small>
+          </div>
+        </div>
+
+      </div>
+      <h2 class="text-900 text-lg mt-5">Address</h2>
+      <div class="row">
+        <div class="field col-12 md:col-12">
+          <label for="sameAsEmployeeAddress" class="required-label">Same as Employee</label>
+          <div class="d-flex align-items-center">
+            <div class="mr-3">
+              <p-radioButton (onClick)="onSameAsEmployeeAddressChange($event)" name="sameAsEmployeeAddress"
+                             value="true"
+                             formControlName="sameAsEmployeeAddress"
+                             inputId="sameAsEmployeeYes"></p-radioButton>
+              <label for="sameAsEmployeeYes" class="ml-1">Yes</label>
+            </div>
+            <div>
+              <p-radioButton (onClick)="onSameAsEmployeeAddressChange($event)" name="sameAsEmployeeAddress"
+                             value="false" formControlName="sameAsEmployeeAddress"
+                             inputId="sameAsEmployeeNo"></p-radioButton>
+              <label for="sameAsEmployeeNo" class="ml-1">No</label>
+            </div>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.sameAsEmployeeAddress.errors" class="mt-1">
+            <small *ngIf="f1.sameAsEmployeeAddress.errors['required']" class="p-error">Selection is required.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label htmlFor="lastname2">House No.</label>
+            <input [(ngModel)]="employeeDTO.gradient.person.address.houseNumber"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.houseNumberG.errors }"
+                   formControlName='houseNumberG'
+                   id="houseNumberG" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.houseNumberG.errors" class="mt-1">
+            <small *ngIf="f1.houseNumberG.errors['required']" class="p-error">House No. is required.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label htmlFor="lastname2">Street one</label>
+            <input [(ngModel)]="employeeDTO.gradient.person.address.streetOne"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.streetOneG.errors }"
+                   formControlName='streetOneG'
+                   id="streetOneG" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.streetOneG.errors" class="mt-1">
+            <small *ngIf="f1.streetOneG.errors['required']" class="p-error">Street one is required.</small>
+          </div>
+        </div>
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label htmlFor="lastname2">Street two</label>
+            <input [(ngModel)]="employeeDTO.gradient.person.address.streetTwo"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.streetTwoG.errors }"
+                   formControlName='streetTwoG'
+                   id="streetTwoG" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.streetTwoG.errors" class="mt-1">
+            <small *ngIf="f1.streetTwoG.errors['required']" class="p-error">Street two is required.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label class="required-label" htmlFor="lastname2">City</label>
+            <input [(ngModel)]="employeeDTO.gradient.person.address.city"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.cityG.errors }"
+                   formControlName='cityG'
+                   id="cityG" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.cityG.errors" class="mt-1">
+            <small *ngIf="f1.cityG.errors['required']" class="p-error">City is required.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label class="required-label" htmlFor="lastname2">District</label>
+            <input [(ngModel)]="employeeDTO.gradient.person.address.district"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.districtG.errors }"
+                   formControlName='districtG'
+                   id="districtG" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.districtG.errors" class="mt-1">
+            <small *ngIf="f1.districtG.errors['required']" class="p-error">District is required.</small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <div class="field p-fluid">
+            <label class="required-label" htmlFor="lastname2">Postal Code</label>
+            <input [(ngModel)]="employeeDTO.gradient.person.address.postalCode"
+                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1.postalCodeG.errors }"
+                   formControlName='postalCodeG'
+                   id="postalCodeG" pInputText type="text"/>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1.postalCodeG.errors" class="mt-1">
+            <small *ngIf="f1.postalCodeG.errors['required']" class="p-error">Postal Code is required.</small>
           </div>
         </div>
       </div>

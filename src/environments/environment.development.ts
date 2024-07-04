@@ -31,6 +31,11 @@ export const environment = {
       GET_ALL: `${API_BASE_URL_MAIN}/getAgencyList`,
       SAVE: `${API_BASE_URL_MAIN}/saveAgency`,
     },
+    EMPLOYEE: {
+      GET_ALL: `${API_BASE_URL_MAIN}/getEmployeeList`,
+      SAVE: `${API_BASE_URL_MAIN}/saveEmployee`,
+      GENERATE_EMP_ID: `${API_BASE_URL_MAIN}/generateEmployeeId`,
+    }
   }
 
 };

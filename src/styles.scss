@@ -17,3 +17,9 @@ $gutter: 1rem; //for primeflex grid system
   background: none;
   cursor: pointer;
 }
+
+.required-label::after {
+  content: '*';
+  color: red;
+  margin-left: 4px;
+}

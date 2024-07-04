@@ -7,7 +7,7 @@ export interface PersonDTO {
   nic: string;
   email: string;
   mobile1: string;
-  pmobile2: string;
+  mobile2: string;
   passport: string;
   dob: string;
   address: AddressDTO;

@@ -1,13 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ValidationHandlerService} from "../../../service/validation-handler.service";
-import {FormBuilder, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MainService} from "../../../service/main.service";
 import {ConfigService} from "../../../service/config.service";
 import {Router} from "@angular/router";
 import {EmployeeDTO} from "../../../model/EmployeeDTO";
 import {Role} from "../../../util/Role";
 import {GradientType} from "../../../util/GradientType";
+import {AgencyDTO} from "../../../model/AgencyDTO";
+import {DomainMinistryDTO} from "../../../model/DomainMinistryDTO";
 
 @Component({
   selector: 'app-employee',
@@ -16,6 +18,7 @@ import {GradientType} from "../../../util/GradientType";
 })
 export class EmployeeComponent implements OnInit {
 
+  employeeForm!: FormGroup;
   position: string = '';
   isAddEnabled: boolean = false;
   isEmployeeFormSubmitted: boolean = false;
@@ -29,7 +32,7 @@ export class EmployeeComponent implements OnInit {
       nic: '',
       email: '',
       mobile1: '',
-      pmobile2: '',
+      mobile2: '',
       passport: '',
       dob: '',
       address: {
@@ -94,7 +97,7 @@ export class EmployeeComponent implements OnInit {
         nic: '',
         email: '',
         mobile1: '',
-        pmobile2: '',
+        mobile2: '',
         passport: '',
         dob: '',
         address: {
@@ -112,6 +115,7 @@ export class EmployeeComponent implements OnInit {
     }
 
   };
+  agencyList: AgencyDTO[] = [];
 
   constructor(
     private messageService: MessageService,
@@ -122,34 +126,117 @@ export class EmployeeComponent implements OnInit {
     private _configService: ConfigService,
     private route: Router
   ) {
+
   }
 
-  employeeForm = this.formBuilder.group({
-    name: [null, Validators.required],
-    email: [null, Validators.required],
-    phone: [null, [Validators.required, Validators.pattern(this._validationService.mobileNumberValidation())]],
-    phone2: [null, [Validators.required, Validators.pattern(this._validationService.mobileNumberValidation())]],
-    regNum: [null, Validators.required],
-    domainMinistry: [null, Validators.required],
+  reactiveForm() {
+    this.employeeForm = this.formBuilder.group({
+      firstName: [null, Validators.required],
+      lastName: [null, Validators.required],
+      nic: [null, [Validators.required, Validators.pattern(this._validationService.sriLankaNICValidation())]],
+      email: [null, Validators.required],
+      phone: [null, [Validators.required, Validators.pattern(this._validationService.mobileNumberValidation())]],
+      phone2: [null, [Validators.pattern(this._validationService.mobileNumberValidation())]],
+      empId: [{value: null, disabled: true}],
+      agency: [null, Validators.required],
+      passport: [null],
+      dob: [null, Validators.required],
 
-    streetOne: [null],
-    streetTwo: [null],
-    city: [null, Validators.required],
-    district: [null, Validators.required],
-    postalCode: [null, Validators.required],
-  });
+      houseNumberE: [null],
+      streetOneE: [null],
+      streetTwoE: [null],
+      city: [null, Validators.required],
+      district: [null, Validators.required],
+      postalCode: [null, Validators.required],
+
+      gradientType: [null, Validators.required],
+      firstNameG: [null, Validators.required],
+      lastNameG: [null, Validators.required],
+      nicG: [null, [Validators.required, Validators.pattern(this._validationService.sriLankaNICValidation())]],
+      emailG: [null, Validators.required],
+      phoneG: [null, [Validators.required, Validators.pattern(this._validationService.mobileNumberValidation())]],
+      phone2G: [null, [Validators.required, Validators.pattern(this._validationService.mobileNumberValidation())]],
+      passportG: [null],
+      sameAsEmployeeAddress: [null],
+      houseNumberG: [null],
+      streetOneG: [null],
+      streetTwoG: [null],
+      cityG: [null, Validators.required],
+      districtG: [null, Validators.required],
+      postalCodeG: [null, Validators.required],
+    });
+  }
+
 
   get f1() {
     return this.employeeForm.controls;
   }
 
   ngOnInit() {
+    this.reactiveForm();
+    this.getAllAgencies();
+    this.generateEmpId();
+
+  }
+
+  setAgency(event: any) {
+    this.employeeDTO.agency.id = event.value.id;
   }
 
   onClickEmployeeCreate() {
+    this.isAddEnabled = true;
+
+  }
+
+  onSameAsEmployeeAddressChange(event: any) {
+    console.log(event);
+    this.employeeDTO.gradient.sameAsEmployeeAddress = event.value;
+    if (event.value) {
+      this.employeeDTO.gradient.person.address.houseNumber = this.employeeDTO.person.address.houseNumber;
+      this.employeeDTO.gradient.person.address.streetOne = this.employeeDTO.person.address.streetOne;
+      this.employeeDTO.gradient.person.address.streetTwo = this.employeeDTO.person.address.streetTwo;
+      this.employeeDTO.gradient.person.address.city = this.employeeDTO.person.address.city;
+      this.employeeDTO.gradient.person.address.district = this.employeeDTO.person.address.district;
+      this.employeeDTO.gradient.person.address.postalCode = this.employeeDTO.person.address.postalCode;
+
+
+      this.employeeForm.controls['houseNumberG'].disabled;
+      this.employeeForm.controls['streetOneG'].disabled;
+      this.employeeForm.controls['streetTwoG'].disabled;
+      this.employeeForm.controls['cityG'].disabled;
+      this.employeeForm.controls['districtG'].disabled;
+      this.employeeForm.controls['postalCodeG'].disabled;
+    }
   }
 
   onAddEmployeeSubmit() {
+  }
+
+  generateEmpId() {
+    this._mainService.generateEmpId().subscribe((data: any) => {
+      this.employeeDTO.empId = data['message'];
+    }, error => {
+      this.messageService.add({severity: 'error', summary: 'Error', detail: error.error.error});
+      if (error.status === 401) {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'You will be logged out.'});
+        this._configService.logOut();
+      }
+    });
+  }
+
+  getAllAgencies() {
+    this._mainService.getAllAgency().subscribe((data: Array<AgencyDTO>) => {
+      if (data.length > 0) {
+        this.agencyList = data;
+      } else {
+      }
+    }, error => {
+      this.messageService.add({severity: 'error', summary: 'Error', detail: error.error.error});
+      if (error.status === 401) {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'You will be logged out.'});
+        this._configService.logOut();
+      }
+    });
   }
 
 }

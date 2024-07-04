@@ -49,4 +49,8 @@ export class MainService {
   getAllAgency() {
     return this.http.get(MAIN_URL.AGENCY.GET_ALL).pipe(map(result => (result as Array<AgencyDTO>)));
   }
+
+  generateEmpId() {
+    return this.http.get(MAIN_URL.EMPLOYEE.GENERATE_EMP_ID).pipe(map(result => (result as string)));
+  }
 }
