@@ -4,9 +4,8 @@ import {ValidationHandlerService} from "../../service/validation-handler.service
 import {FormBuilder, Validators} from "@angular/forms";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {AuthRequestDTO} from "../../model/AuthRequestDTO";
-import {UserService} from "../../service/user.service";
-import {AuthResponseDTO} from "../../model/AuthResponseDTO";
 import Swal from "sweetalert2";
+import {LoginService} from "../../service/login.service";
 
 interface ngOnInit {
 }
@@ -30,7 +29,7 @@ export class LoginComponent implements ngOnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private _authService: UserService,
+    private _loginService: LoginService,
   ) {
   }
 
@@ -59,7 +58,7 @@ export class LoginComponent implements ngOnInit, OnDestroy {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'Please fill all the fields'});
       return;
     }
-    this._authService.login(this.authRequestDTO).subscribe(result => {
+    this._loginService.login(this.authRequestDTO).subscribe(result => {
       if (result != null) {
         this.passwordIncorrect = false;
         sessionStorage.setItem("TOKEN", result.accessToken);

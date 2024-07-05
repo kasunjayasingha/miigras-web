@@ -18,17 +18,17 @@ export class MainService {
     private http: HttpClient,
     private configService: ConfigService
   ) {
-    if(this.configService.isTokenValid()){
-      Swal.fire({
-        title: 'Session Expired',
-        text: 'Your session has expired. Please login again.',
-        icon: 'warning',
-        confirmButtonText: 'Ok',
-        allowOutsideClick: false,
-      }).then(() => {
-        this.configService.logOut();
-      });
-    }
+    // if(this.configService.isTokenValid()){
+    //   Swal.fire({
+    //     title: 'Session Expired',
+    //     text: 'Your session has expired. Please login again.',
+    //     icon: 'warning',
+    //     confirmButtonText: 'Ok',
+    //     allowOutsideClick: false,
+    //   }).then(() => {
+    //     this.configService.logOut();
+    //   });
+    // }
   }
 
   isAddEnabled: boolean = false;

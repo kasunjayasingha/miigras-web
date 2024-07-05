@@ -299,6 +299,22 @@
           </div>
         </div>
 
+        <div class="field col-6">
+          <div class="field p-fluid">
+            <label class="required-label" htmlFor="firstname2">Type</label>
+            <p-dropdown
+              (onChange)="setGradientType($event)"
+              [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1['gradientType'].errors }"
+              [options]="gradientTypeList"
+              [showClear]="true"
+              formControlName="gradientType"
+              optionLabel="lable" placeholder="Select Agency"></p-dropdown>
+          </div>
+          <div *ngIf="isEmployeeFormSubmitted && f1['gradientType'].errors" class="mt-1">
+            <small *ngIf="f1['gradientType'].errors?.['required']" class="p-error">Type is required.</small>
+          </div>
+        </div>
+
         <div class="field col-12 md:col-3">
           <div class="field p-fluid">
             <label class="required-label" htmlFor="lastname2">NIC</label>
@@ -373,20 +389,20 @@
       <h2 class="text-900 text-lg mt-5">Address</h2>
       <div class="row">
         <div class="field col-12 md:col-12">
-          <label for="sameAsEmployeeAddress" class="required-label">Same as Employee</label>
+          <label class="required-label">Same as Employee</label>
           <div class="d-flex align-items-center">
             <div class="mr-3">
               <p-radioButton (onClick)="onSameAsEmployeeAddressChange($event)" name="sameAsEmployeeAddress"
                              value="true"
                              formControlName="sameAsEmployeeAddress"
                              inputId="sameAsEmployeeYes"></p-radioButton>
-              <label for="sameAsEmployeeYes" class="ml-1">Yes</label>
+              <label  class="ml-1">Yes</label>
             </div>
             <div>
               <p-radioButton (onClick)="onSameAsEmployeeAddressChange($event)" name="sameAsEmployeeAddress"
                              value="false" formControlName="sameAsEmployeeAddress"
                              inputId="sameAsEmployeeNo"></p-radioButton>
-              <label for="sameAsEmployeeNo" class="ml-1">No</label>
+              <label  class="ml-1">No</label>
             </div>
           </div>
           <div *ngIf="isEmployeeFormSubmitted && f1['sameAsEmployeeAddress'].errors" class="mt-1">

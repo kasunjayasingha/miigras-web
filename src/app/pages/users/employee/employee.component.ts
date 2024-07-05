@@ -117,6 +117,23 @@ export class EmployeeComponent implements OnInit {
   };
   agencyList: AgencyDTO[] = [];
 
+  gradientTypeList= [
+    {label: 'Father', value: GradientType.FATHER},
+    {label: 'Mother', value: GradientType.MOTHER},
+    {label: 'Spouse', value: GradientType.SPOUSE},
+    {label: 'Child', value: GradientType.CHILD},
+    {label: 'Sibling', value: GradientType.SIBLING},
+    {label: 'Grandparent', value: GradientType.GRANDPARENT},
+    {label: 'Grandchild', value: GradientType.GRANDCHILD},
+    {label: 'Aunt', value: GradientType.AUNT},
+    {label: 'Uncle', value: GradientType.UNCLE},
+    {label: 'Cousin', value: GradientType.COUSIN},
+    {label: 'Nephew', value: GradientType.NEPHEW},
+    {label: 'Niece', value: GradientType.NIECE},
+    {label: 'Friend', value: GradientType.FRIEND},
+    {label: 'Other', value: GradientType.OTHER},
+  ]
+
   constructor(
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
@@ -157,7 +174,7 @@ export class EmployeeComponent implements OnInit {
       phoneG: [null, [Validators.required, Validators.pattern(this._validationService.mobileNumberValidation())]],
       phone2G: [null, [Validators.required, Validators.pattern(this._validationService.mobileNumberValidation())]],
       passportG: [null],
-      sameAsEmployeeAddress: [null],
+      sameAsEmployeeAddress: [null, Validators.required],
       houseNumberG: [null],
       streetOneG: [null],
       streetTwoG: [null],
@@ -179,6 +196,8 @@ export class EmployeeComponent implements OnInit {
 
   }
 
+  setGradientType(event: any) {}
+
   setAgency(event: any) {
     this.employeeDTO.agency.id = event.value.id;
   }
@@ -189,9 +208,9 @@ export class EmployeeComponent implements OnInit {
   }
 
   onSameAsEmployeeAddressChange(event: any) {
-    console.log(event);
-    this.employeeDTO.gradient.sameAsEmployeeAddress = event.value;
-    if (event.value) {
+
+    if ( event.value =="true") {
+      this.employeeDTO.gradient.sameAsEmployeeAddress = true;
       this.employeeDTO.gradient.person.address.houseNumber = this.employeeDTO.person.address.houseNumber;
       this.employeeDTO.gradient.person.address.streetOne = this.employeeDTO.person.address.streetOne;
       this.employeeDTO.gradient.person.address.streetTwo = this.employeeDTO.person.address.streetTwo;
@@ -206,8 +225,8 @@ export class EmployeeComponent implements OnInit {
       this.employeeForm.controls['cityG'].disable();
       this.employeeForm.controls['districtG'].disable();
       this.employeeForm.controls['postalCodeG'].disable();
-    }
-    if(!event.value){
+    } else {
+      this.employeeDTO.gradient.sameAsEmployeeAddress = false;
       this.employeeForm.controls['houseNumberG'].enable();
       this.employeeForm.controls['streetOneG'].enable();
       this.employeeForm.controls['streetTwoG'].enable();
