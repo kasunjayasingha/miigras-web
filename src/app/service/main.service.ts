@@ -14,6 +14,8 @@ import {ConfigService} from "./config.service";
 })
 export class MainService {
 
+  public employeeCount: number = 0;
+
   constructor(
     private http: HttpClient,
     private configService: ConfigService
@@ -71,5 +73,9 @@ export class MainService {
 
   saveEmployee(employeeDTO: EmployeeDTO) {
     return this.http.post(MAIN_URL.EMPLOYEE.SAVE, employeeDTO);
+  }
+
+  getAllEmployee() {
+    return this.http.get(MAIN_URL.EMPLOYEE.GET_ALL).pipe(map(result => (result as Array<EmployeeDTO>)));
   }
 }

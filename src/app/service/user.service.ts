@@ -17,17 +17,7 @@ export class UserService {
     private http: HttpClient,
     private configService: ConfigService,
   ) {
-    // if(this.configService.isTokenValid()){
-    //   Swal.fire({
-    //     title: 'Session Expired',
-    //     text: 'Your session has expired. Please login again.',
-    //     icon: 'warning',
-    //     confirmButtonText: 'Ok',
-    //     allowOutsideClick: false,
-    //   }).then(() => {
-    //     this.configService.logOut();
-    //   });
-    // }
+
   }
 
   register(user: UserModel) {
@@ -40,6 +30,10 @@ export class UserService {
 
   userStatusChange(user: UserModel) {
     return this.http.post(REGISTRATION_URL.USER_STATUS, user);
+  }
+
+  login(authRequestDTO: AuthRequestDTO) {
+    return this.http.post(AUTENTICATION_URL_API.LOGIN, authRequestDTO).pipe(map(result => (result as AuthResponseDTO)));
   }
 
   logout() {

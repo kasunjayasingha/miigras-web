@@ -2,6 +2,7 @@ import {PersonDTO} from "./PersonDTO";
 import {UserModel} from "./UserModel";
 import {AgencyDTO} from "./AgencyDTO";
 import {GradientDTO} from "./GradientDTO";
+import {JobType} from "../util/jobType";
 
 export interface EmployeeDTO {
   id: number;
@@ -10,4 +11,5 @@ export interface EmployeeDTO {
   user: UserModel;
   agency: AgencyDTO;
   gradient: GradientDTO;
+  jobType: JobType;
 }

@@ -1,1 +1,47 @@
-<p>employee-view works!</p>
+<p-table [paginator]="true" [rowsPerPageOptions]="[5, 10, 30]"
+         [rows]="5"
+         [showCurrentPageReport]="true"
+         [tableStyle]="{'min-width': '50rem'}"
+         [value]="employees"
+         class="card py-10 "
+         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+         styleClass="p-datatable-striped">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>No.</th>
+      <th>Name</th>
+      <th>Country</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Job Title</th>
+      <th>Gradient</th>
+      <th>Action</th>
+    </tr>
+  </ng-template>
+  <ng-template let-index="rowIndex" let-employee pTemplate="body">
+    <tr>
+      <td>{{ index + 1 }}</td>
+      <td>{{ employee.person.firstName }} {{ employee.person.lastName }}</td>
+      <td>{{ employee.agency.domainMinistry.country.name }}</td>
+      <td>{{ employee.person.email }}</td>
+      <td>{{ employee.person.mobile1 }} | {{ employee.person.mobile2 }}</td>
+      <td>{{ employee.jobType }}</td>
+      <td>{{ employee.gradient.gradientType }}</td>
+      <td>
+        <button class="no-border-btn" (click)="viewEmployee(employee)" [routerLink]="['view']">
+          <i class="pi pi-eye text-green-500"></i>
+        </button>
+        &nbsp;
+        <!--        <button class="no-border-btn" (click)="editEmployee(employee)" [routerLink]="['edit']">-->
+        <!--          <i class="pi pi-pencil text-blue-500"></i>-->
+        <!--        </button>-->
+      </td>
+
+    </tr>
+  </ng-template>
+</p-table>
+<p-toast></p-toast>
+<p-confirmDialog [position]="position" [style]="{ width: '25vw' }" acceptButtonStyleClass="p-button-text"
+                 header="Confirmation"
+                 key="positionDialog" rejectButtonStyleClass="p-button-text"
+                 rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>

@@ -5,6 +5,7 @@ import {throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {AppConfig} from "../layout/service/app.layout.service";
 import {AUTENTICATION_URL_API} from "../app.component";
+import Swal from "sweetalert2";
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,7 @@ export class ConfigService {
     private http: HttpClient,
   ) {
   }
+
   handleError(err: HttpErrorResponse) {
     // console.log("Begin", err);
     if (err.error instanceof ProgressEvent) {
@@ -72,9 +74,19 @@ export class ConfigService {
     return throwError(err);
   }
 
-  isTokenValid() {
-    return this.http.post(AUTENTICATION_URL_API.IS_TOKEN_VALID, "").subscribe((res:any) => {
-      return res['success'] == 'FAILURE';
+  isTokenValid(): any {
+    this.http.post(AUTENTICATION_URL_API.IS_TOKEN_VALID, "").subscribe((res: any) => {
+      if (res['success'] == 'FAILURE') {
+        Swal.fire({
+          title: 'Session Expired',
+          text: 'Your session has expired. Please login again.',
+          icon: 'warning',
+          confirmButtonText: 'Ok',
+          allowOutsideClick: false,
+        }).then(() => {
+          return true;
+        });
+      }
     });
   }
 

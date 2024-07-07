@@ -5,7 +5,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {AuthRequestDTO} from "../../model/AuthRequestDTO";
 import Swal from "sweetalert2";
-import {LoginService} from "../../service/login.service";
+import {UserService} from "../../service/user.service";
 
 interface ngOnInit {
 }
@@ -29,7 +29,7 @@ export class LoginComponent implements ngOnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private _loginService: LoginService,
+    private _loginService: UserService,
   ) {
   }
 

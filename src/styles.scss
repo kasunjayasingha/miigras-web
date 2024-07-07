@@ -23,3 +23,8 @@ $gutter: 1rem; //for primeflex grid system
   color: red;
   margin-left: 4px;
 }
+
+.right-align-button {
+  margin-left: auto;
+  display: flex;
+}

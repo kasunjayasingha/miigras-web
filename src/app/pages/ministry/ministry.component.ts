@@ -78,7 +78,6 @@ export class MinistryComponent implements OnInit {
   }
 
   onAddMinistrySubmit() {
-    console.log(this.ministryDTO);
     this.isMinistryFormSubmitted = true;
     if (this.ministryForm.invalid) {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'Please fill all required fields'});

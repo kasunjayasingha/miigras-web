@@ -10,6 +10,8 @@ import {Role} from "../../../util/Role";
 import {GradientType} from "../../../util/GradientType";
 import {AgencyDTO} from "../../../model/AgencyDTO";
 import {DomainMinistryDTO} from "../../../model/DomainMinistryDTO";
+import Swal from "sweetalert2";
+import {JobType} from "../../../util/jobType";
 
 @Component({
   selector: 'app-employee',
@@ -25,6 +27,7 @@ export class EmployeeComponent implements OnInit {
   employeeDTO: EmployeeDTO = {
     id: 0,
     empId: '',
+    jobType: JobType.WORKER,
     person: {
       id: 0,
       firstName: '',
@@ -116,23 +119,33 @@ export class EmployeeComponent implements OnInit {
 
   };
   agencyList: AgencyDTO[] = [];
+  employeeCount = 0;
 
-  gradientTypeList= [
-    {label: 'Father', value: GradientType.FATHER},
-    {label: 'Mother', value: GradientType.MOTHER},
-    {label: 'Spouse', value: GradientType.SPOUSE},
-    {label: 'Child', value: GradientType.CHILD},
-    {label: 'Sibling', value: GradientType.SIBLING},
-    {label: 'Grandparent', value: GradientType.GRANDPARENT},
-    {label: 'Grandchild', value: GradientType.GRANDCHILD},
-    {label: 'Aunt', value: GradientType.AUNT},
-    {label: 'Uncle', value: GradientType.UNCLE},
-    {label: 'Cousin', value: GradientType.COUSIN},
-    {label: 'Nephew', value: GradientType.NEPHEW},
-    {label: 'Niece', value: GradientType.NIECE},
-    {label: 'Friend', value: GradientType.FRIEND},
-    {label: 'Other', value: GradientType.OTHER},
+  gradientTypeList = [
+    {name: 'Father', value: GradientType.FATHER},
+    {name: 'Mother', value: GradientType.MOTHER},
+    {name: 'Spouse', value: GradientType.SPOUSE},
+    {name: 'Child', value: GradientType.CHILD},
+    {name: 'Sibling', value: GradientType.SIBLING},
+    {name: 'Grandparent', value: GradientType.GRANDPARENT},
+    {name: 'Grandchild', value: GradientType.GRANDCHILD},
+    {name: 'Aunt', value: GradientType.AUNT},
+    {name: 'Uncle', value: GradientType.UNCLE},
+    {name: 'Cousin', value: GradientType.COUSIN},
+    {name: 'Nephew', value: GradientType.NEPHEW},
+    {name: 'Niece', value: GradientType.NIECE},
+    {name: 'Friend', value: GradientType.FRIEND},
+    {name: 'Other', value: GradientType.OTHER},
   ]
+
+  jobTypeList = [
+    {name: 'Worker', value: JobType.WORKER},
+    {name: 'Driver', value: JobType.DRIVER},
+    {name: 'Cleaner', value: JobType.CLEANER},
+    {name: 'Security', value: JobType.SECURITY},
+    {name: 'Helper', value: JobType.HELPER},
+    {name: 'House Wife', value: JobType.HOUSE_WIFE},
+  ];
 
   constructor(
     private messageService: MessageService,
@@ -158,6 +171,7 @@ export class EmployeeComponent implements OnInit {
       agency: [null, Validators.required],
       passport: [null],
       dob: [null, Validators.required],
+      jobType: [null, Validators.required],
 
       houseNumberE: [null],
       streetOneE: [null],
@@ -191,25 +205,30 @@ export class EmployeeComponent implements OnInit {
 
   ngOnInit() {
     this.reactiveForm();
-    this.getAllAgencies();
-    this.generateEmpId();
-
+    this.employeeCount = this._mainService.employeeCount;
   }
 
-  setGradientType(event: any) {}
+  setGradientType(event: any) {
+    this.employeeDTO.gradient.gradientType = event.value;
+  }
+
+  setJobType(event: any) {
+    this.employeeDTO.jobType = event.value;
+  }
 
   setAgency(event: any) {
     this.employeeDTO.agency.id = event.value.id;
   }
 
   onClickEmployeeCreate() {
+    this.getAllAgencies();
+    this.generateEmpId();
     this.isAddEnabled = true;
-
   }
 
   onSameAsEmployeeAddressChange(event: any) {
 
-    if ( event.value =="true") {
+    if (event.value == "true") {
       this.employeeDTO.gradient.sameAsEmployeeAddress = true;
       this.employeeDTO.gradient.person.address.houseNumber = this.employeeDTO.person.address.houseNumber;
       this.employeeDTO.gradient.person.address.streetOne = this.employeeDTO.person.address.streetOne;
@@ -249,79 +268,28 @@ export class EmployeeComponent implements OnInit {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'Please fill the required fields'});
       return;
     }
+    this.employeeDTO.user.firstName = this.employeeDTO.person.firstName;
+    this.employeeDTO.user.lastName = this.employeeDTO.person.lastName;
+    this.employeeDTO.user.email = this.employeeDTO.person.email;
+    this.employeeDTO.user.password = "";
+    this.employeeDTO.user.role = Role.WORKER;
+    this.employeeDTO.user.enabled = true;
     this._mainService.saveEmployee(this.employeeDTO).subscribe((data: any) => {
       if (data['success'] === 'SUCCESS') {
         this.isAddEnabled = false;
-        this.isEmployeeFormSubmitted = false;
-        this.employeeForm.reset();
-        this.employeeDTO = {
-          id: 0,
-          empId: '',
-          person: {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Employee created successfully',
+          confirmButtonText: 'Ok',
+          allowOutsideClick: false,
+        }).then((result) => {
+          this.isEmployeeFormSubmitted = false;
+          this.employeeForm.reset();
+          this.employeeDTO = {
             id: 0,
-            firstName: '',
-            lastName: '',
-            nic: '',
-            email: '',
-            mobile1: '',
-            mobile2: '',
-            passport: '',
-            dob: '',
-            address: {
-              id: 0,
-              houseNumber: '',
-              streetOne: '',
-              streetTwo: '',
-              village: '',
-              city: '',
-              district: '',
-              postalCode: '',
-            }
-          },
-          user: {
-            id: 0,
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            role: Role.WORKER,
-            enabled: true
-          },
-          agency: {
-            id: 0,
-            name: '',
-            email: '',
-            phone: '',
-            phone2: '',
-            regNum: '',
-            fax: '',
-            addressAgency: {
-              id: 0,
-              houseNumber: '',
-              streetOne: '',
-              streetTwo: '',
-              village: '',
-              city: '',
-              district: '',
-              postalCode: '',
-            },
-            domainMinistry: {
-              id: 0,
-              name: '',
-              email: '',
-              phone: '',
-              fax: '',
-              country: {
-                id: 0,
-                name: '',
-                code: '',
-                ntpTime: ''
-              }
-            }
-          },
-          gradient: {
-            id: 0,
-            gradientType: GradientType.OTHER,
+            empId: '',
+            jobType: JobType.WORKER,
             person: {
               id: 0,
               firstName: '',
@@ -343,10 +311,75 @@ export class EmployeeComponent implements OnInit {
                 postalCode: '',
               }
             },
-            sameAsEmployeeAddress: false,
-          }
-        };
-        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Employee created successfully'});
+            user: {
+              id: 0,
+              firstName: '',
+              lastName: '',
+              email: '',
+              password: '',
+              role: Role.WORKER,
+              enabled: true
+            },
+            agency: {
+              id: 0,
+              name: '',
+              email: '',
+              phone: '',
+              phone2: '',
+              regNum: '',
+              fax: '',
+              addressAgency: {
+                id: 0,
+                houseNumber: '',
+                streetOne: '',
+                streetTwo: '',
+                village: '',
+                city: '',
+                district: '',
+                postalCode: '',
+              },
+              domainMinistry: {
+                id: 0,
+                name: '',
+                email: '',
+                phone: '',
+                fax: '',
+                country: {
+                  id: 0,
+                  name: '',
+                  code: '',
+                  ntpTime: ''
+                }
+              }
+            },
+            gradient: {
+              id: 0,
+              gradientType: GradientType.OTHER,
+              person: {
+                id: 0,
+                firstName: '',
+                lastName: '',
+                nic: '',
+                email: '',
+                mobile1: '',
+                mobile2: '',
+                passport: '',
+                dob: '',
+                address: {
+                  id: 0,
+                  houseNumber: '',
+                  streetOne: '',
+                  streetTwo: '',
+                  village: '',
+                  city: '',
+                  district: '',
+                  postalCode: '',
+                }
+              },
+              sameAsEmployeeAddress: false,
+            }
+          };
+        });
       } else {
         this.messageService.add({severity: 'error', summary: 'Error', detail: 'Employee creation failed'});
       }
