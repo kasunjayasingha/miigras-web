@@ -166,10 +166,16 @@
         <div class="field col-12 md:col-6">
           <div class="field p-fluid">
             <label class="required-label" htmlFor="lastname2">Date of Birth</label>
-            <input [(ngModel)]="employeeDTO.person.dob"
-                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1['dob'].errors }"
-                   formControlName='dob'
-                   id="dob" pInputText type="text"/>
+            <p-calendar
+              [(ngModel)]="employeeDTO.person.dob"
+              [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1['dob'].errors }"
+              [showIcon]="true"
+              formControlName='dob'
+              inputId="dob" />
+<!--            <input [(ngModel)]="employeeDTO.person.dob"-->
+<!--                   [ngClass]="{ 'ng-invalid ng-dirty': isEmployeeFormSubmitted && f1['dob'].errors }"-->
+<!--                   formControlName='dob'-->
+<!--                   id="dob" pInputText type="text"/>-->
           </div>
           <div *ngIf="isEmployeeFormSubmitted && f1['dob'].errors" class="mt-1">
             <small *ngIf="f1['dob'].errors?.['required']" class="p-error">Date of Birth is required.</small>

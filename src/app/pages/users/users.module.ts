@@ -16,6 +16,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ChipsModule} from "primeng/chips";
 import {RippleModule} from "primeng/ripple";
 import {RadioButtonModule} from "primeng/radiobutton";
+import {CalendarModule} from "primeng/calendar";
 
 
 @NgModule({
@@ -25,21 +26,22 @@ import {RadioButtonModule} from "primeng/radiobutton";
     EmployeeEditComponent,
     EmployeeViewComponent
   ],
-  imports: [
-    CommonModule,
-    UsersRoutingModule,
-    TableModule,
-    InputSwitchModule,
-    ToastModule,
-    ConfirmDialogModule,
-    DialogModule,
-    DropdownModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ChipsModule,
-    RippleModule,
-    RadioButtonModule
-  ]
+    imports: [
+        CommonModule,
+        UsersRoutingModule,
+        TableModule,
+        InputSwitchModule,
+        ToastModule,
+        ConfirmDialogModule,
+        DialogModule,
+        DropdownModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ChipsModule,
+        RippleModule,
+        RadioButtonModule,
+        CalendarModule
+    ]
 })
 export class UsersModule {
 }

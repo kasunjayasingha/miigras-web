@@ -164,7 +164,7 @@ export class EmployeeComponent implements OnInit {
       firstName: [null, Validators.required],
       lastName: [null, Validators.required],
       nic: [null, [Validators.required, Validators.pattern(this._validationService.sriLankaNICValidation())]],
-      email: [null, Validators.required],
+      email: [null, [Validators.required, Validators.pattern(this._validationService.emailValidation())]],
       phone: [null, [Validators.required, Validators.pattern(this._validationService.mobileNumberValidation())]],
       phone2: [null, [Validators.pattern(this._validationService.mobileNumberValidation())]],
       empId: [{value: null, disabled: true}],
@@ -209,11 +209,13 @@ export class EmployeeComponent implements OnInit {
   }
 
   setGradientType(event: any) {
-    this.employeeDTO.gradient.gradientType = event.value;
+    this.employeeDTO.gradient.gradientType = event.value.value;
   }
 
   setJobType(event: any) {
-    this.employeeDTO.jobType = event.value;
+    console.log("1 "+event.value);
+    console.log("2 "+event.value.value);
+    this.employeeDTO.jobType = event.value.value;
   }
 
   setAgency(event: any) {
@@ -379,6 +381,7 @@ export class EmployeeComponent implements OnInit {
               sameAsEmployeeAddress: false,
             }
           };
+          this.route.navigate(['/miigras-web/users/employee']);
         });
       } else {
         this.messageService.add({severity: 'error', summary: 'Error', detail: 'Employee creation failed'});
