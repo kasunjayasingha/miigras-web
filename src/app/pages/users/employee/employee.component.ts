@@ -213,8 +213,6 @@ export class EmployeeComponent implements OnInit {
   }
 
   setJobType(event: any) {
-    console.log("1 "+event.value);
-    console.log("2 "+event.value.value);
     this.employeeDTO.jobType = event.value.value;
   }
 

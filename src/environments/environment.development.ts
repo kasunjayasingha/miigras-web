@@ -1,5 +1,6 @@
 const API_BASE_URL_USER = 'api/v1/user';
 const API_BASE_URL_MAIN = 'api/v1/main';
+const API_BASE_URL_DASHBOARD = 'api/v1/dashboard';
 export const environment = {
   ENVIRONMENT: 'DEV',
   YEAR_VERSION: '2024',
@@ -37,6 +38,9 @@ export const environment = {
       SAVE: `${API_BASE_URL_MAIN}/saveEmployee`,
       GENERATE_EMP_ID: `${API_BASE_URL_MAIN}/generateEmployeeId`,
     }
+  },
+  DASHBOARD_URL: {
+    GET_ALL_INCIDENT_DATA: `${API_BASE_URL_DASHBOARD}/getIncidentData`,
   }
 
 };

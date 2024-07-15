@@ -22,3 +22,4 @@ export class AppComponent implements OnInit{
 export const AUTENTICATION_URL_API = environment.AUTENTICATION_URL;
 export const MAIN_URL = environment.MAIN_URL;
 export const REGISTRATION_URL = environment.REGISTRATION_URL;
+export const DASHBOARD_URL = environment.DASHBOARD_URL;
