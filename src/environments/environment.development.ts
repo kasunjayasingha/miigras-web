@@ -42,6 +42,7 @@ export const environment = {
   DASHBOARD_URL: {
     GET_TILES_DATA: `${API_BASE_URL_DASHBOARD}/getTilesData`,
     GET_ALL_INCIDENT_DATA: `${API_BASE_URL_DASHBOARD}/getIncidentsData`,
+    GET_INCIDENT_DATA_BY_ID: `${API_BASE_URL_DASHBOARD}/getIncidentDataById/`,
   }
 
 };

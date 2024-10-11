@@ -29,6 +29,8 @@ import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 import {AgencyComponent} from './pages/agency/agency.component';
 import {AgencyViewComponent} from './pages/agency/agency-view/agency-view.component';
 import {DropdownModule} from "primeng/dropdown";
+import {IncidentUserComponent} from './pages/incident-user/incident-user.component';
+import {GoogleMapsModule} from '@angular/google-maps'
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import {DropdownModule} from "primeng/dropdown";
     NotFoundComponent,
     CountryComponent,
     AgencyComponent,
+    IncidentUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +62,7 @@ import {DropdownModule} from "primeng/dropdown";
     DialogModule,
     SweetAlert2Module.forRoot(),
     DropdownModule,
+    GoogleMapsModule
   ],
   providers: [MessageService, ConfirmationService,
     {

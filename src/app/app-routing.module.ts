@@ -7,6 +7,7 @@ import {AccessDeniedComponent} from "./pages/access-denied/access-denied.compone
 import {authGuard} from "./guards/auth.guard";
 import {NotFoundComponent} from "./pages/not-found/not-found.component";
 import {CountryComponent} from "./pages/country/country.component";
+import {IncidentUserComponent} from "./pages/incident-user/incident-user.component";
 
 const routes: Routes = [
   {
@@ -47,6 +48,12 @@ const routes: Routes = [
       {
         path: 'users',
         loadChildren: () => import('./pages/users/users.module').then(m => m.UsersModule),
+        canActivate: [authGuard],
+        data: {expectedRole: ['ADMIN', 'SUPER_ADMIN']}
+      },
+      {
+        path: 'incidentUser/:incidentId',
+        component: IncidentUserComponent,
         canActivate: [authGuard],
         data: {expectedRole: ['ADMIN', 'SUPER_ADMIN']}
       }

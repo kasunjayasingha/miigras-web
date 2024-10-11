@@ -1,0 +1,48 @@
+<div class="grid">
+  <div class="col-12 lg:col-2 xl:col-2">
+    <div class="card mb-0">
+      <img src="assets/images/avatar/user.png">
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="col-12 lg:col-4 xl:col-3">
+    <div class="card mb-0" style="height: 50vh; overflow-y: auto;">
+
+      <div class="field p-fluid">
+        <label style="font-size: 15px;"
+               htmlFor="name">Employee Id:
+          <b>{{ incidentData.employee.empId }}</b></label>
+      </div>
+
+      <div class="field p-fluid">
+        <label style="font-size: 15px;"
+               htmlFor="name">Name:
+          <b>{{ incidentData.employee.person.firstName }} {{ incidentData.employee.person.lastName }}</b></label>
+      </div>
+      <div class="field p-fluid">
+        <label style="font-size: 15px;"
+               htmlFor="">Email:
+          <b>{{ incidentData.employee.person.email }}</b></label>
+      </div>
+
+      <div class="field p-fluid">
+        <label style="font-size: 15px;"
+               htmlFor="">Mobile:
+          <b>{{ incidentData.employee.person.mobile1 }}</b></label>
+      </div>
+
+      <div class="field p-fluid">
+        <label style="font-size: 15px;"
+               htmlFor="">Passport:
+          <b>{{ incidentData.employee.person.passport }}</b></label>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-12 lg:col-8 xl:col-9">
+    <div class="card mb-0" id="map" style="height: 100vh;">
+    </div>
+  </div>
+</div>
