@@ -40,7 +40,8 @@ export const environment = {
     }
   },
   DASHBOARD_URL: {
-    GET_ALL_INCIDENT_DATA: `${API_BASE_URL_DASHBOARD}/getIncidentData`,
+    GET_TILES_DATA: `${API_BASE_URL_DASHBOARD}/getTilesData`,
+    GET_ALL_INCIDENT_DATA: `${API_BASE_URL_DASHBOARD}/getIncidentsData`,
   }
 
 };

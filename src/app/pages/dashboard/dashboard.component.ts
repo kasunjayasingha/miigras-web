@@ -1,7 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {LayoutService} from "../../layout/service/app.layout.service";
 import {Subscription} from "rxjs";
-import {MenuItem} from "primeng/api";
+import {ConfirmationService, MenuItem, MessageService} from "primeng/api";
+import {ValidationHandlerService} from "../../service/validation-handler.service";
+import {FormBuilder} from "@angular/forms";
+import {MainService} from "../../service/main.service";
+import {Router} from "@angular/router";
+import {ConfigService} from "../../service/config.service";
+import {DashboardService} from "../../service/dashboard.service";
+import {DashboardDTO} from "../../model/DashboardDTO";
 
 @Component({
   selector: 'app-dashboard',
@@ -13,90 +20,41 @@ export class DashboardComponent implements OnInit, OnDestroy  {
 
   products!: any;
 
-  chartData: any;
+  dashboardDTO!: DashboardDTO;
 
-  chartOptions: any;
-
-  subscription!: Subscription;
-
-  constructor( public layoutService: LayoutService) {
-    this.subscription = this.layoutService.configUpdate$.subscribe(() => {
-      this.initChart();
-    });
+  constructor(
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private _validationService: ValidationHandlerService,
+    private formBuilder: FormBuilder,
+    private _dashboardService: DashboardService,
+    private route: Router,
+    private _configService: ConfigService
+  ) {
   }
 
   ngOnInit() {
-    this.initChart();
-
-    this.items = [
-      { label: 'Add New', icon: 'pi pi-fw pi-plus' },
-      { label: 'Remove', icon: 'pi pi-fw pi-minus' }
-    ];
+    this.getTilesData();
   }
 
-  initChart() {
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
-    this.chartData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label: 'First Dataset',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          fill: false,
-          backgroundColor: documentStyle.getPropertyValue('--bluegray-700'),
-          borderColor: documentStyle.getPropertyValue('--bluegray-700'),
-          tension: .4
-        },
-        {
-          label: 'Second Dataset',
-          data: [28, 48, 40, 19, 86, 27, 90],
-          fill: false,
-          backgroundColor: documentStyle.getPropertyValue('--green-600'),
-          borderColor: documentStyle.getPropertyValue('--green-600'),
-          tension: .4
-        }
-      ]
-    };
-
-    this.chartOptions = {
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor
-          }
-        }
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: textColorSecondary
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false
-          }
-        },
-        y: {
-          ticks: {
-            color: textColorSecondary
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false
-          }
-        }
+  getTilesData() {
+    this._dashboardService.getTilesData().subscribe((res: DashboardDTO) => {
+      if (res != null) {
+        this.dashboardDTO = res;
+        console.log(JSON.stringify(this.dashboardDTO));
       }
-    };
+    }, error => {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error });
+      if (error.status === 401) {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'You will be logged out.' });
+        this._configService.logOut();
+      }
+    });
   }
+
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+
   }
 
 }
