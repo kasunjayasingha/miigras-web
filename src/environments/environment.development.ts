@@ -1,6 +1,8 @@
 const API_BASE_URL_USER = 'api/v1/user';
 const API_BASE_URL_MAIN = 'api/v1/main';
 const API_BASE_URL_DASHBOARD = 'api/v1/dashboard';
+const API_BASE_URL_MOBILE = 'api/v1/mobile';
+
 export const environment = {
   ENVIRONMENT: 'DEV',
   YEAR_VERSION: '2024',
@@ -24,6 +26,7 @@ export const environment = {
       SAVE: `${API_BASE_URL_MAIN}/saveCountry`,
       CHEACK_COUNTRY_EXIST: `${API_BASE_URL_MAIN}/checkCountryIsPresent`,
       DELETE: `${API_BASE_URL_MAIN}/deleteCountry`,
+      GET_EMPLOYEE_LOCATION_BY_EMP_ID: `${API_BASE_URL_MAIN}/getEmployeeLocationByEmployeeId/`,
     },
     MINISTRY: {
       GET_ALL: `${API_BASE_URL_MAIN}/getDomainMinistryList`,
@@ -43,6 +46,8 @@ export const environment = {
     GET_TILES_DATA: `${API_BASE_URL_DASHBOARD}/getTilesData`,
     GET_ALL_INCIDENT_DATA: `${API_BASE_URL_DASHBOARD}/getIncidentsData`,
     GET_INCIDENT_DATA_BY_ID: `${API_BASE_URL_DASHBOARD}/getIncidentDataById/`,
+    SEND_NOTIFICATION: `${API_BASE_URL_MOBILE}/send-notification`,
+    COMPLETE_INCIDENT: `${API_BASE_URL_DASHBOARD}/complete-incident`,
   }
 
 };

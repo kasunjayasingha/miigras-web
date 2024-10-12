@@ -78,8 +78,9 @@
           <tr>
             <th>No.</th>
             <th>Employee</th>
-            <th>Country</th>
+            <th>Job Type</th>
             <th>Severity</th>
+            <th>Complain Date</th>
             <th>Action</th>
           </tr>
         </ng-template>
@@ -89,6 +90,7 @@
             <td>{{ incident.employeeName }}</td>
             <td>{{ incident.employeeCountry }}</td>
             <td>{{ incident.serverity }}</td>
+            <td>{{ incident.incidentDate }}</td>
             <td>
               <button (click)="viewIncident(incident)" class="no-border-btn">
                 <i class="pi pi-eye text-blue-500"></i>
@@ -99,7 +101,7 @@
         </ng-template>
       </p-table>
     </div>
-    <div class="card">
+    <div class="card" style="height: 50vh; overflow-y: auto;">
       <div class="flex align-items-center justify-content-between mb-4">
         <h5>Notifications</h5>
         <div>
@@ -111,30 +113,32 @@
 
       <span class="block text-600 font-medium mb-3">TODAY</span>
       <ul class="p-0 mx-0 mt-0 mb-4 list-none">
-        <li class="flex align-items-center py-2 border-bottom-1 surface-border">
+        <li *ngFor="let notification of todayPredictions"
+            class="flex align-items-center py-2 border-bottom-1 surface-border">
           <div
             class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
             <i class="pi pi-user text-xl text-blue-500"></i>
           </div>
-          <span class="text-900 line-height-3">Kumari Perera:
-                    <span class="text-700"> They hurt me. <span
-                      class="text-blue-500">Sad</span></span>
-                </span>
+          <span class="text-900 line-height-3">{{ notification.name }}: <br>
+            <span class="text-700"> {{ notification.message }} <span
+              class="text-blue-500">{{ notification.emotion }}</span></span>
+          </span>
         </li>
 
       </ul>
 
-      <span class="block text-600 font-medium mb-3">YESTERDAY</span>
+      <span class="block text-600 font-medium mb-3">PAST</span>
       <ul class="p-0 m-0 list-none">
-        <li class="flex align-items-center py-2 border-bottom-1 surface-border">
+        <li *ngFor="let notification of lastPredictions"
+            class="flex align-items-center py-2 border-bottom-1 surface-border">
           <div
             class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
             <i class="pi pi-user text-xl text-blue-500"></i>
           </div>
-          <span class="text-900 line-height-3">Amal Silva:
-                    <span class="text-700"> They are very kind. <span
-                      class="text-blue-500">Happy</span></span>
-                </span>
+          <span class="text-900 line-height-3">{{ notification.name }}: <br>
+            <span class="text-700"> {{ notification.message }} <span
+              class="text-blue-500">{{ notification.emotion }}</span></span>
+          </span>
         </li>
       </ul>
     </div>

@@ -13,5 +13,10 @@
     "target": "http://localhost:8081",
     "secure": false,
     "changeOrigin": true
+  },
+  "/api/v1/mobile/*": {
+    "target": "http://localhost:8081",
+    "secure": false,
+    "changeOrigin": true
   }
 }

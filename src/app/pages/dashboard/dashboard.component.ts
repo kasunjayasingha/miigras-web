@@ -12,6 +12,8 @@ import {DashboardDTO} from "../../model/DashboardDTO";
 import {CountryDTO} from "../../model/CountryDTO";
 import {IncidentDTO} from "../../model/IncidentDTO";
 import {IncidentDashBoardDTO} from "../../model/IncidentDashBoardDTO";
+import {PersonDTO} from "../../model/PersonDTO";
+import {PredictionDTO} from "../../model/PredictionDTO";
 
 @Component({
   selector: 'app-dashboard',
@@ -37,6 +39,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   incidents: IncidentDashBoardDTO[] = [];
+  todayPredictions: PredictionDTO[] = [];
+  lastPredictions: PredictionDTO[] = [];
 
   constructor(
     private messageService: MessageService,
@@ -85,6 +89,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
           // console.log(JSON.stringify(res));
           // console.log("2");
           this.incidents = res;
+          this.todayPredictions = this.incidents[0].todayPrediction;
+          this.lastPredictions = this.incidents[0].lastPrediction;
         }
       }),
       catchError(error => {

@@ -10,6 +10,7 @@ import {JobType} from "../../../../util/jobType";
 import {EmployeeDTO} from "../../../../model/EmployeeDTO";
 import {Role} from "../../../../util/Role";
 import {AgencyDTO} from "../../../../model/AgencyDTO";
+import {EmployeeTrackingDTO} from "../../../../model/EmployeeTrackingDTO";
 
 @Component({
   selector: 'app-employee-edit',
@@ -20,6 +21,7 @@ export class EmployeeEditComponent implements OnInit {
 
   employeeForm!: FormGroup;
   position: string = '';
+  viewIfHas: boolean = false;
   employeeDTO: EmployeeDTO = {
     id: 0,
     empId: '',
@@ -182,6 +184,7 @@ export class EmployeeEditComponent implements OnInit {
         this.employeeForm.controls['jobType'].patchValue(item);
       }
     });
+    this.getEmployeeLocationByEmployeeId();
   }
 
   reactiveForm() {
@@ -291,6 +294,35 @@ export class EmployeeEditComponent implements OnInit {
         this.messageService.add({severity: 'error', summary: 'Error', detail: 'You will be logged out.'});
         this._configService.logOut();
       }
+    });
+  }
+
+  getEmployeeLocationByEmployeeId() {
+    this._mainService.getEmployeeLocationByEmployeeId(this.employeeDTO.id).subscribe((res: EmployeeTrackingDTO) => {
+      if (res.longitude > 0 && res.latitude > 0) {
+        this.loadMap(res);
+      }
+    }, error => {
+      this.messageService.add({severity: 'error', summary: 'Error', detail: error.error.error});
+      if (error.status === 401) {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'You will be logged out.'});
+        this._configService.logOut();
+      }
+    });
+
+  }
+
+  loadMap(data: EmployeeTrackingDTO): void {
+    this.viewIfHas = true;
+    const map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
+      center: {lat: data.latitude, lng: data.longitude},
+      zoom: 12,
+    });
+
+    new google.maps.Marker({
+      position: {lat: data.latitude, lng: data.longitude},
+      map: map,
+      title: 'Location',
     });
   }
 

@@ -8,6 +8,7 @@ import {AgencyDTO} from "../model/AgencyDTO";
 import {EmployeeDTO} from "../model/EmployeeDTO";
 import Swal from "sweetalert2";
 import {ConfigService} from "./config.service";
+import {EmployeeTrackingDTO} from "../model/EmployeeTrackingDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -77,5 +78,9 @@ export class MainService {
 
   getAllEmployee() {
     return this.http.get(MAIN_URL.EMPLOYEE.GET_ALL).pipe(map(result => (result as Array<EmployeeDTO>)));
+  }
+
+  getEmployeeLocationByEmployeeId(employeeId: number) {
+    return this.http.get(MAIN_URL.COUNTRY.GET_EMPLOYEE_LOCATION_BY_EMP_ID + employeeId).pipe(map(result => (result as EmployeeTrackingDTO)));
   }
 }

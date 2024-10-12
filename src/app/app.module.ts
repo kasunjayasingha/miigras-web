@@ -31,6 +31,7 @@ import {AgencyViewComponent} from './pages/agency/agency-view/agency-view.compon
 import {DropdownModule} from "primeng/dropdown";
 import {IncidentUserComponent} from './pages/incident-user/incident-user.component';
 import {GoogleMapsModule} from '@angular/google-maps'
+import {InputTextareaModule} from "primeng/inputtextarea";
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import {GoogleMapsModule} from '@angular/google-maps'
     DialogModule,
     SweetAlert2Module.forRoot(),
     DropdownModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    InputTextareaModule
   ],
   providers: [MessageService, ConfirmationService,
     {

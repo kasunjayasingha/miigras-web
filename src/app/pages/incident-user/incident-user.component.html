@@ -1,42 +1,81 @@
 <div class="grid">
   <div class="col-12 lg:col-2 xl:col-2">
-    <div class="card mb-0">
+    <div class="card mb-0" style="height: 25vh;">
       <img src="assets/images/avatar/user.png">
+    </div>
+  </div>
+  <div class="col-12 lg:col-8 xl:col-8">
+    <div class="card mb-0" style="height: 25vh;">
+      <label htmlFor="lastname2">Complaint:</label>
+      <textarea [value]="incidentData.prediction.message" pInputTextarea disabled
+                id="districtG" rows="4" cols="50">
+</textarea>
+
+    </div>
+  </div>
+  <div class="col-12 lg:col-2 xl:col-2">
+    <div class="card mb-0" style="height: 25vh; display: flex; justify-content: center; align-items: center;">
+      <div class="field p-fluid"
+           style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <label style="font-size: 15px;" htmlFor="name">Investigation</label>
+        <button *ngIf="!showButton" (click)="setInvestigation()" class="p-button-success" label="Start"
+                pButton></button>
+        <button *ngIf="showButton" (click)="setInvestigation()" label="Done" class="p-button-danger" pButton></button>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="grid">
   <div class="col-12 lg:col-4 xl:col-3">
-    <div class="card mb-0" style="height: 50vh; overflow-y: auto;">
+    <div class="card mb-0" style="height: 100vh; overflow-y: auto;">
 
       <div class="field p-fluid">
         <label style="font-size: 15px;"
-               htmlFor="name">Employee Id:
-          <b>{{ incidentData.employee.empId }}</b></label>
+               htmlFor="name">Employee Id:</label>
+        <input [value]="incidentData.employee.empId"
+               pInputText disabled type="text"/>
       </div>
 
       <div class="field p-fluid">
         <label style="font-size: 15px;"
-               htmlFor="name">Name:
-          <b>{{ incidentData.employee.person.firstName }} {{ incidentData.employee.person.lastName }}</b></label>
+               htmlFor="name">Name:</label>
+        <input [value]="incidentData.employee.person.firstName + ' ' + incidentData.employee.person.lastName"
+               pInputText disabled type="text"/>
       </div>
       <div class="field p-fluid">
         <label style="font-size: 15px;"
-               htmlFor="">Email:
-          <b>{{ incidentData.employee.person.email }}</b></label>
-      </div>
-
-      <div class="field p-fluid">
-        <label style="font-size: 15px;"
-               htmlFor="">Mobile:
-          <b>{{ incidentData.employee.person.mobile1 }}</b></label>
+               htmlFor="">Email:</label>
+        <input [value]="incidentData.employee.person.email"
+               pInputText disabled type="text"/>
       </div>
 
       <div class="field p-fluid">
         <label style="font-size: 15px;"
-               htmlFor="">Passport:
-          <b>{{ incidentData.employee.person.passport }}</b></label>
+               htmlFor="">Mobile:</label>
+        <input [value]="incidentData.employee.person.mobile1"
+               pInputText disabled type="text"/>
+      </div>
+
+      <div class="field p-fluid">
+        <label style="font-size: 15px;"
+               htmlFor="">Passport:</label>
+        <input [value]="incidentData.employee.person.passport"
+               pInputText disabled type="text"/>
+      </div>
+
+      <div class="field p-fluid">
+        <label style="font-size: 15px;"
+               htmlFor="">Emotion:</label>
+        <input [value]="incidentData.prediction.emotion"
+               pInputText disabled type="text"/>
+      </div>
+
+      <div class="field p-fluid">
+        <label style="font-size: 15px;"
+               htmlFor="">Severity:</label>
+        <input [value]="incidentData.prediction.severity"
+               pInputText disabled type="text"/>
       </div>
 
     </div>
@@ -46,3 +85,4 @@
     </div>
   </div>
 </div>
+<p-toast></p-toast>
