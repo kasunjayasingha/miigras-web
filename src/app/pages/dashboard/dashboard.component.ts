@@ -85,12 +85,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   getIncidentsData(): Observable<Array<IncidentDashBoardDTO>> {
     return this._dashboardService.getIncidentsData().pipe(
       tap((res: Array<IncidentDashBoardDTO>) => {
-        if (res != null) {
+        if (res != null && res[0].employeeName != null) {
           // console.log(JSON.stringify(res));
           // console.log("2");
           this.incidents = res;
           this.todayPredictions = this.incidents[0].todayPrediction;
           this.lastPredictions = this.incidents[0].lastPrediction;
+        } else if (res != null && (res[0].todayPrediction != null || res[0].lastPrediction != null)) {
+          this.todayPredictions = res[0].todayPrediction;
+          this.lastPredictions = res[0].lastPrediction;
         }
       }),
       catchError(error => {
